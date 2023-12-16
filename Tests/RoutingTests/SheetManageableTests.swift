@@ -21,6 +21,7 @@ fileprivate final class SheetManageableTests: XCTestCase {
         router = nil
         super.tearDown()
     }
+
     func testPresentSheet() {
         router.presentSheet(.settings)
         XCTAssertNotNil(router.sheet)

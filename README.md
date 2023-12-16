@@ -13,9 +13,9 @@
 - Simplifies code by removing navigation responsibilities from views.
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
-- Ridiculously **lightweight** (56 executable lines of code).
+- Ridiculously **lightweight** (108 executable lines of code).
 - **Type-safe** routing using enums and associated values.
-- 100% code coverage for protocol implementations.
+- Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
 
 <br>

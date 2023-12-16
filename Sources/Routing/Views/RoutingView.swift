@@ -25,6 +25,11 @@ public struct RoutingView<RootView: View, Routes: ViewDisplayable>: View {
                     $0.viewToDisplay
                         .environmentObject(router)
                 }
+                .iflet(router.alert) { rootView, alert  in
+                    rootView.alert(isPresented: router.isAlertPresented) {
+                        alert
+                    }
+                }
         }
     }
 }

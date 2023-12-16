@@ -1,14 +1,13 @@
 //
 //  NavigationPathManageable.swift
 //
-//
 //  Created by James Sedlacek on 12/16/23.
 //
 
 import SwiftUI
 
 /// A type that can be used to manage a navigation path
-public protocol NavigationPathManageable: ObservableObject {
+internal protocol NavigationPathManageable: ObservableObject {
     associatedtype Destination: ViewDisplayable
 
     var path: NavigationPath { get set }
