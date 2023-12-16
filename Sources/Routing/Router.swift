@@ -6,8 +6,8 @@
 
 import SwiftUI
 
-final class Router<Routes: ViewDisplayable>: Routable {
-    typealias Destination = Routes
+public final class Router<Routes: ViewDisplayable>: Routable {
+    public typealias Destination = Routes
 
-    @Published var path: NavigationPath = .init()
+    @Published public var path: NavigationPath = .init()
 }
