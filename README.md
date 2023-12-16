@@ -9,18 +9,20 @@
 - 100% code coverage for protocol implementations.
 - Zero 3rd party dependencies.
 
+<br>
+
 ## Installation
 
 You can install `Routing` using the Swift Package Manager.
 
-1. In Xcode, select "File" > "Swift Packages" > "Add Package Dependency".
-2. Copy & paste the following code into the search bar.```
-https://github.com/JamesSedlacek/Routing.git
-3. Xcode will fetch the repository & the "Routing" library will be added to your project.
-4. Add this to the top of any Swift file:
-```swift
-import Routing
+1. In Xcode, select "File" > "Add Package Dependencies".
+2. Copy & paste the following code into the "Search or Enter Package URL" search bar.
 ```
+https://github.com/JamesSedlacek/Routing.git
+```
+4. Xcode will fetch the repository & the "Routing" library will be added to your project.
+
+<br>
 
 ## Router In View Example
 
