@@ -4,6 +4,9 @@
 - Simplifies code by removing navigation responsibilities from views.
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
+- Ridiculously lightweight (46 executable lines of code).
+- 100% code coverage for the Routable protocol.
+- Zero 3rd party dependencies.
 
 ## Key Components
 
@@ -81,7 +84,7 @@ enum ExampleRoute: ViewDisplayable {
 class ExampleViewModel: ObservableObject {
     private let router: Router<ExampleRoute>
 
-    init(router: Router) {
+    init(router: Router<ExampleRoute>) {
         self.router = router
     }
 
