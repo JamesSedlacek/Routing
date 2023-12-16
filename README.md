@@ -5,6 +5,13 @@
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
 
+## Key Components
+
+- **Routable:** Protocol for navigation through a set of destinations.
+- **Router:** Class that manages navigation paths using types conforming to ViewDisplayable.
+- **RoutingView:** SwiftUI View that uses a Router to manage navigation stacks.
+- **ViewDisplayable:** Protocol for types that represent navigable views.
+
 
 ## Router In View Example
 
@@ -12,15 +19,28 @@
 import SwiftUI
 import Routing
 
+enum ExampleRoute: ViewDisplayable {
+    case detail
+    case settings
+    
+    @ViewBuilder
+    var viewToDisplay: some View {
+        switch self {
+        case .detail:
+            DetailView()
+        case .settings:
+            SettingsView()
+        }
+    }
+}
+
 struct ExampleView: View {
     var body: some View {
-        RoutingView { router in
+        RoutingView(ExampleRoute.self) { router in
     
             // Example of using `push`
             Button("Go to Detail View") {
-                router.push {
-                    DetailView()
-                }
+                router.push(.detail)
             }
     
             // Example of using `pop`
@@ -43,17 +63,30 @@ struct ExampleView: View {
 import SwiftUI
 import Routing
 
+enum ExampleRoute: ViewDisplayable {
+    case detail
+    case settings
+    
+    @ViewBuilder
+    var viewToDisplay: some View {
+        switch self {
+        case .detail:
+            DetailView()
+        case .settings:
+            SettingsView()
+        }
+    }
+}
+
 class ExampleViewModel: ObservableObject {
-    private let router: Router
+    private let router: Router<ExampleRoute>
 
     init(router: Router) {
         self.router = router
     }
 
     func goToDetailView() {
-        router.push {
-            DetailView()
-        }
+        router.push(.detail)
     }
 
     func goBack() {
@@ -87,7 +120,7 @@ struct ExampleView: View {
 
 struct ContentView: View {
     var body: some View {
-        RoutingView { router in
+        RoutingView(ExampleRoute.self) { router in
             ExampleView(viewModel: .init(router: router))
         }
     }

@@ -6,18 +6,18 @@
 
 import SwiftUI
 
-struct RoutingView<RootView: View>: View {
-    @StateObject private var router: Router = .init()
-    private let rootView: (Router) -> RootView
+struct RoutingView<RootView: View, Routes: ViewDisplayable>: View {
+    @StateObject private var router: Router<Routes> = .init()
+    private let rootView: (Router<Routes>) -> RootView
 
-    init(@ViewBuilder rootView: @escaping (Router) -> RootView) {
+    init(_ routeType: Routes.Type, @ViewBuilder rootView: @escaping (Router<Routes>) -> RootView) {
         self.rootView = rootView
     }
 
     var body: some View {
         NavigationStack(path: $router.path) {
             rootView(router)
-                .navigationDestination(for: DisplayableView.self) {
+                .navigationDestination(for: Router<Routes>.Destination.self) {
                     $0.viewToDisplay
                         .environmentObject(router)
                 }

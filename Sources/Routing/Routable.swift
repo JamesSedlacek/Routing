@@ -8,11 +8,13 @@ import SwiftUI
 
 /// A type that can be used to navigate through a set of destinations
 public protocol Routable: ObservableObject {
+    associatedtype Destination: ViewDisplayable
+
     var path: NavigationPath { get set }
 
     func pop()
     func popToRoot()
-    func push<V: View>(@ViewBuilder destination: @escaping () -> V)
+    func push(_ destination: Destination)
 }
 
 extension Routable {
@@ -25,9 +27,10 @@ extension Routable {
     public func popToRoot() {
         path = .init()
     }
+
     /// Pushes a new view onto the navigation path
     /// - Parameter destination: The view to be pushed onto the navigation path
-    public func push<V: View>(@ViewBuilder destination: @escaping () -> V) {
-        path.append(DisplayableView(destination()))
+    public func push(_ destination: Destination) {
+        path.append(destination)
     }
 }

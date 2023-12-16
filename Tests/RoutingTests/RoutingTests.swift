@@ -3,7 +3,7 @@ import SwiftUI
 @testable import Routing
 
 final class RoutableTests: XCTestCase {
-    private var router: Router!
+    private var router: MockRouter!
 
     override func setUp() {
         super.setUp()
@@ -16,28 +16,20 @@ final class RoutableTests: XCTestCase {
     }
 
     func testPush() {
-        router.push {
-            MockView()
-        }
+        router.push(.settings)
         XCTAssertEqual(router.path.count, 1)
     }
 
     func testPop() {
-        router.push {
-            MockView()
-        }
+        router.push(.profile("TestAccountId"))
         XCTAssertEqual(router.path.count, 1)
         router.pop()
         XCTAssert(router.path.isEmpty)
     }
 
     func testPopToRoot() {
-        router.push {
-            MockView()
-        }
-        router.push {
-            MockView()
-        }
+        router.push(.settings)
+        router.push(.profile("TestAccountId"))
         XCTAssertEqual(router.path.count, 2)
         router.popToRoot()
         XCTAssert(router.path.isEmpty)
@@ -47,5 +39,28 @@ final class RoutableTests: XCTestCase {
 struct MockView: View {
     var body: some View {
         Text("Mock View")
+    }
+}
+
+final class MockRouter: Routable {
+    typealias Destination = Routes
+
+    @Published var path: NavigationPath = .init()
+
+    enum Routes: ViewDisplayable {
+        case settings
+        case profile(_ id: String)
+
+        var id: UUID { .init() }
+
+        @ViewBuilder
+        var viewToDisplay: some View {
+            switch self {
+            case .settings:
+                MockView()
+            case .profile(_):
+                MockView()
+            }
+        }
     }
 }
