@@ -34,6 +34,17 @@ final class RoutableTests: XCTestCase {
         router.popToRoot()
         XCTAssert(router.path.isEmpty)
     }
+
+    func testPresentSheet() {
+        router.presentSheet(.settings)
+        XCTAssertNotNil(router.sheet)
+    }
+
+    func testDismissSheet() {
+        router.presentSheet(.settings)
+        router.dismissSheet()
+        XCTAssertNil(router.sheet)
+    }
 }
 
 struct MockView: View {
@@ -46,6 +57,7 @@ final class MockRouter: Routable {
     typealias Destination = Routes
 
     @Published var path: NavigationPath = .init()
+    @Published public var sheet: Destination?
 
     enum Routes: ViewDisplayable {
         case settings

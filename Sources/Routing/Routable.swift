@@ -11,10 +11,13 @@ public protocol Routable: ObservableObject {
     associatedtype Destination: ViewDisplayable
 
     var path: NavigationPath { get set }
+    var sheet: Destination? { get set }
 
     func pop()
     func popToRoot()
     func push(_ destination: Destination)
+    func presentSheet(_ destination: Destination)
+    func dismissSheet()
 }
 
 extension Routable {
@@ -32,5 +35,16 @@ extension Routable {
     /// - Parameter destination: The view to be pushed onto the navigation path
     public func push(_ destination: Destination) {
         path.append(destination)
+    }
+
+    /// Presents a new sheet view
+    /// - Parameter destination: The view to be presented as a sheet
+    public func presentSheet(_ destination: Destination) {
+        sheet = destination
+    }
+
+    /// Dismisses the currently presented sheet view
+    public func dismissSheet() {
+        sheet = nil
     }
 }

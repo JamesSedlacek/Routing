@@ -21,6 +21,10 @@ public struct RoutingView<RootView: View, Routes: ViewDisplayable>: View {
                     $0.viewToDisplay
                         .environmentObject(router)
                 }
+                .sheet(item: $router.sheet) {
+                    $0.viewToDisplay
+                        .environmentObject(router)
+                }
         }
     }
 }

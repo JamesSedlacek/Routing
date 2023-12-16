@@ -4,7 +4,7 @@
 - Simplifies code by removing navigation responsibilities from views.
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
-- Ridiculously lightweight (46 executable lines of code).
+- Ridiculously lightweight (56 executable lines of code).
 - 100% code coverage for the Routable protocol.
 - Zero 3rd party dependencies.
 
@@ -54,6 +54,11 @@ struct ExampleView: View {
             // Example of using `popToRoot`
             Button("Go back to Root") {
                 router.popToRoot()
+            }
+            
+            // Example of using `presentSheet`
+            Button("Present Settings View") {
+                router.presentSheet(.settings)
             }
         }
     }

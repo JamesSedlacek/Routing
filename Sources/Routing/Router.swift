@@ -10,4 +10,5 @@ public final class Router<Routes: ViewDisplayable>: Routable {
     public typealias Destination = Routes
 
     @Published public var path: NavigationPath = .init()
+    @Published public var sheet: Destination?
 }
