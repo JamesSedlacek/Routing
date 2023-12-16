@@ -11,6 +11,13 @@
 
 <br>
 
+## Requirements
+
+- **iOS**: Requires iOS 17.0 or later.
+- **macOS**: Requires macOS 14.0 or later.
+
+<br>
+
 ## Installation
 
 You can install `Routing` using the Swift Package Manager.
