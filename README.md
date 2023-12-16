@@ -4,17 +4,23 @@
 - Simplifies code by removing navigation responsibilities from views.
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
-- Ridiculously lightweight (56 executable lines of code).
-- 100% code coverage for the Routable protocol.
+- Ridiculously **lightweight** (56 executable lines of code).
+- **Type-safe** routing using enums and associated values.
+- 100% code coverage for protocol implementations.
 - Zero 3rd party dependencies.
 
-## Key Components
+## Installation
 
-- **Routable:** Protocol for navigation through a set of destinations.
-- **Router:** Class that manages navigation paths using types conforming to ViewDisplayable.
-- **RoutingView:** SwiftUI View that uses a Router to manage navigation stacks.
-- **ViewDisplayable:** Protocol for types that represent navigable views.
+You can install `Routing` using the Swift Package Manager.
 
+1. In Xcode, select "File" > "Swift Packages" > "Add Package Dependency".
+2. Copy & paste the following code into the search bar.```
+https://github.com/JamesSedlacek/Routing.git
+3. Xcode will fetch the repository & the "Routing" library will be added to your project.
+4. Add this to the top of any Swift file:
+```swift
+import Routing
+```
 
 ## Router In View Example
 

@@ -1,9 +1,16 @@
+//
+//  NavigationPathManageableTests.swift
+//  
+//
+//  Created by James Sedlacek on 12/16/23.
+//
+
 import XCTest
 import SwiftUI
 @testable import Routing
 
-final class RoutableTests: XCTestCase {
-    private var router: MockRouter!
+fileprivate final class NavigationPathManageableTests: XCTestCase {
+    var router: MockNavigationPathManager!
 
     override func setUp() {
         super.setUp()
@@ -21,7 +28,7 @@ final class RoutableTests: XCTestCase {
     }
 
     func testPop() {
-        router.push(.profile("TestAccountId"))
+        router.push(.settings)
         XCTAssertEqual(router.path.count, 1)
         router.pop()
         XCTAssert(router.path.isEmpty)
@@ -29,50 +36,32 @@ final class RoutableTests: XCTestCase {
 
     func testPopToRoot() {
         router.push(.settings)
-        router.push(.profile("TestAccountId"))
+        router.push(.settings)
         XCTAssertEqual(router.path.count, 2)
         router.popToRoot()
         XCTAssert(router.path.isEmpty)
     }
-
-    func testPresentSheet() {
-        router.presentSheet(.settings)
-        XCTAssertNotNil(router.sheet)
-    }
-
-    func testDismissSheet() {
-        router.presentSheet(.settings)
-        router.dismissSheet()
-        XCTAssertNil(router.sheet)
-    }
 }
 
-struct MockView: View {
-    var body: some View {
-        Text("Mock View")
-    }
-}
-
-final class MockRouter: Routable {
-    typealias Destination = Routes
-
+fileprivate class MockNavigationPathManager: NavigationPathManageable {
+    typealias Destination = Route
     @Published var path: NavigationPath = .init()
-    @Published public var sheet: Destination?
 
-    enum Routes: ViewDisplayable {
+    enum Route: ViewDisplayable {
         case settings
-        case profile(_ id: String)
-
-        var id: UUID { .init() }
 
         @ViewBuilder
         var viewToDisplay: some View {
             switch self {
             case .settings:
-                MockView()
-            case .profile(_):
-                MockView()
+                MockSettingsView()
             }
         }
+    }
+}
+
+fileprivate struct MockSettingsView: View {
+    var body: some View {
+        Text("Mock Settings View")
     }
 }
