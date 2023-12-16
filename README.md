@@ -32,11 +32,23 @@
 You can install `Routing` using the Swift Package Manager.
 
 1. In Xcode, select "File" > "Add Package Dependencies".
-2. Copy & paste the following code into the "Search or Enter Package URL" search bar.
+2. Copy & paste the following into the "Search or Enter Package URL" search bar.
 ```
 https://github.com/JamesSedlacek/Routing.git
 ```
 4. Xcode will fetch the repository & the "Routing" library will be added to your project.
+
+<br>
+
+## Router Functions
+1. NavigationPath
+   - Push, Pop, PopToRoot
+2. Sheet
+   - PresentSheet, DismissSheet
+4. Alert
+   - PresentAlert, DismissAlert
+5. ConfirmationDialog (coming soon)
+6. Toast Popups (coming soon)
 
 <br>
 
@@ -83,6 +95,13 @@ struct ExampleView: View {
             // Example of using `presentSheet`
             Button("Present Settings View") {
                 router.presentSheet(.settings)
+            }
+
+            // Example of using `presentAlert`
+            Button("Show alert") {
+                router.presentAlert(.init(title: Text("Testing alerts"),
+                                          primaryButton: .default(Text("OK")),
+                                          secondaryButton: .cancel(Text("Cancel"))))
             }
         }
     }
