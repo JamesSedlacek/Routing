@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-internal protocol AlertManageable: ObservableObject {
+public protocol AlertManageable: ObservableObject {
     var alert: Alert? { get set }
     var isAlertPresented: Binding<Bool> { get set }
 
@@ -18,7 +18,7 @@ extension AlertManageable {
     /// A computed property that returns a Binding<Bool> based on the presence of an alert.
     /// The getter returns true if an alert is present, and false otherwise.
     /// The setter sets the alert to nil if the new value is false.
-    internal var isAlertPresented: Binding<Bool> {
+    public var isAlertPresented: Binding<Bool> {
         get {
             return Binding<Bool>(
                 get: { self.alert != nil },

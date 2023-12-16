@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A type that can be used to manage a navigation path
-internal protocol NavigationPathManageable: ObservableObject {
+public protocol NavigationPathManageable: ObservableObject {
     associatedtype Destination: ViewDisplayable
 
     var path: NavigationPath { get set }

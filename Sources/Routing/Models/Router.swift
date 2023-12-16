@@ -11,7 +11,7 @@ public final class Router<Routes: ViewDisplayable>: NavigationPathManageable,
                                                     AlertManageable {
     public typealias Destination = Routes
 
-    @Published internal var path: NavigationPath = .init()
-    @Published internal var sheet: Destination?
-    @Published internal var alert: Alert?
+    @Published public var path: NavigationPath = .init()
+    @Published public var sheet: Destination?
+    @Published public var alert: Alert?
 }
