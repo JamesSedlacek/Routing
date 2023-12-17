@@ -15,7 +15,7 @@
 - Simplifies code by removing navigation responsibilities from views.
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
-- Ridiculously **lightweight** (126 executable lines of code).
+- Ridiculously **lightweight** (135 executable lines of code).
 - **Type-safe** routing using enums and associated values.
 - Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
@@ -43,16 +43,25 @@ https://github.com/JamesSedlacek/Routing.git
 <br>
 
 ## Router Functions
-1. NavigationPath
-   - Push, Pop, PopToRoot
-2. Sheet
-   - PresentSheet, DismissSheet
-3. FullScreenCover
-   - PresentFullScreenCover, DismissFullScreenCover  
-4. Alert
-   - PresentAlert, DismissAlert
-5. ConfirmationDialog (coming soon)
-6. Toast Popups (coming soon)
+```swift
+    // NavigationPath
+    func pop(_ count: Int)
+    func popToRoot()
+    func push(_ destination: Destination)
+    func push(_ destinations: [Destination])
+
+    // Sheet
+    func presentSheet(_ destination: Destination)
+    func dismissSheet()
+    
+    // FullScreenCover
+    func presentFullScreenCover(_ destination: Destination)
+    func dismissFullScreenCover()
+    
+    // Alert
+    func presentAlert(_ alert: Alert)
+    func dismissAlert()
+```
 
 <br>
 

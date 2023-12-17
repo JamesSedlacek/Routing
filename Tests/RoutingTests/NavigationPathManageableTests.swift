@@ -27,10 +27,29 @@ fileprivate final class NavigationPathManageableTests: XCTestCase {
         XCTAssertEqual(router.path.count, 1)
     }
 
+    func testPushMultiple() {
+        router.push([.settings, .settings, .settings])
+        XCTAssertEqual(router.path.count, 3)
+    }
+
     func testPop() {
         router.push(.settings)
         XCTAssertEqual(router.path.count, 1)
         router.pop()
+        XCTAssert(router.path.isEmpty)
+    }
+
+    func testPopMultiple() {
+        router.push([.settings, .settings, .settings])
+        XCTAssertEqual(router.path.count, 3)
+        router.pop(2)
+        XCTAssertEqual(router.path.count, 1)
+    }
+
+    func testPopTooMany() {
+        router.push([.settings, .settings, .settings])
+        XCTAssertEqual(router.path.count, 3)
+        router.pop(4)
         XCTAssert(router.path.isEmpty)
     }
 
