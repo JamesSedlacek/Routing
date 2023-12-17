@@ -15,7 +15,7 @@
 - Simplifies code by removing navigation responsibilities from views.
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
-- Ridiculously **lightweight** (108 executable lines of code).
+- Ridiculously **lightweight** (126 executable lines of code).
 - **Type-safe** routing using enums and associated values.
 - Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
@@ -47,6 +47,8 @@ https://github.com/JamesSedlacek/Routing.git
    - Push, Pop, PopToRoot
 2. Sheet
    - PresentSheet, DismissSheet
+3. FullScreenCover
+   - PresentFullScreenCover, DismissFullScreenCover  
 4. Alert
    - PresentAlert, DismissAlert
 5. ConfirmationDialog (coming soon)
@@ -97,6 +99,11 @@ struct ExampleView: View {
             // Example of using `presentSheet`
             Button("Present Settings View") {
                 router.presentSheet(.settings)
+            }
+            
+            // Example of using `presentFullScreenCover`
+            Button("Present Settings View") {
+                router.presentFullScreenCover(.settings)
             }
 
             // Example of using `presentAlert`

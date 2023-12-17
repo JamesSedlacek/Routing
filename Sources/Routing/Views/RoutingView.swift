@@ -30,6 +30,12 @@ public struct RoutingView<RootView: View, Routes: ViewDisplayable>: View {
                         alert
                     }
                 }
+#if !os(macOS)
+                .fullScreenCover(item: $router.fullScreenCover) {
+                    $0.viewToDisplay
+                        .environmentObject(router)
+                }
+#endif
         }
     }
 }
