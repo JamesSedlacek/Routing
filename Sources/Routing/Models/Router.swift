@@ -6,10 +6,9 @@
 
 import SwiftUI
 
-public final class Router<Routes: ViewDisplayable>: NavigationPathManageable,
-                                                    SheetManageable,
-                                                    FullScreenCoverManageable,
-                                                    AlertManageable {
+public typealias Routable = NavigationPathManageable & SheetManageable & FullScreenCoverManageable & AlertManageable
+
+public final class Router<Routes: ViewDisplayable>: Routable {
     public typealias Destination = Routes
 
     @Published public var path: NavigationPath = .init()

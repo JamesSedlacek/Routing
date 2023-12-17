@@ -42,25 +42,66 @@ https://github.com/JamesSedlacek/Routing.git
 
 <br>
 
-## Router Functions
-```swift
-    // NavigationPath
-    func pop(_ count: Int)
-    func popToRoot()
-    func push(_ destination: Destination)
-    func push(_ destinations: [Destination])
+## Getting Started
 
-    // Sheet
-    func presentSheet(_ destination: Destination)
-    func dismissSheet()
+1. Create the "Route" enum where views will navigate to.
+
+``` swift
+import SwiftUI
+import Routing
+
+enum Route: ViewDisplayable {
+    case detail
+    case settings
     
-    // FullScreenCover
-    func presentFullScreenCover(_ destination: Destination)
-    func dismissFullScreenCover()
-    
-    // Alert
-    func presentAlert(_ alert: Alert)
-    func dismissAlert()
+    @ViewBuilder
+    var viewToDisplay: some View {
+        switch self {
+        case .detail:
+            DetailView()
+        case .settings:
+            SettingsView()
+        }
+    }
+}
+```
+
+2. The RoutingView will be used instead of a NavigationStack.
+Pass in the Route enumeration, so that the RouterView can use them. 
+
+``` swift
+import SwiftUI
+import Routing
+
+struct ContentView: View {
+    var body: some View {
+        RoutingView(Route.self) { router in
+            // Main Content goes here
+        }
+    }
+}
+```
+
+3. Handle navigation using the Router functions
+
+```swift
+// NavigationPath
+func pop(_ count: Int)
+func popToRoot()
+func push(_ destination: Destination)
+func push(_ destinations: [Destination])
+
+// Sheet
+func presentSheet(_ destination: Destination)
+func dismissSheet()
+
+// FullScreenCover
+func presentFullScreenCover(_ destination: Destination)
+func dismissFullScreenCover()
+
+// Alert
+func presentAlert(_ alert: Alert)
+func dismissAlert()
 ```
 
 <br>
