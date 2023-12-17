@@ -9,7 +9,7 @@ import XCTest
 import SwiftUI
 @testable import Routing
 
-fileprivate final class FullScreenCoverManageableTests: XCTestCase {
+final class FullScreenCoverManageableTests: XCTestCase {
     private var router: MockFullScreenCoverManager!
 
     override func setUp() {

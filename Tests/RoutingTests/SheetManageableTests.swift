@@ -9,7 +9,7 @@ import XCTest
 import SwiftUI
 @testable import Routing
 
-fileprivate final class SheetManageableTests: XCTestCase {
+final class SheetManageableTests: XCTestCase {
     private var router: MockSheetManager!
 
     override func setUp() {

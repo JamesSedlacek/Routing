@@ -9,8 +9,8 @@ import XCTest
 import SwiftUI
 @testable import Routing
 
-fileprivate final class NavigationPathManageableTests: XCTestCase {
-    var router: MockNavigationPathManager!
+final class NavigationPathManageableTests: XCTestCase {
+    private var router: MockNavigationPathManager!
 
     override func setUp() {
         super.setUp()
