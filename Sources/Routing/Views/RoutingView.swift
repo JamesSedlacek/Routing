@@ -23,6 +23,8 @@ public struct RoutingView<RootView: View, Routes: ViewDisplayable>: View {
                 }
                 .sheet(item: $router.sheet) {
                     $0.viewToDisplay
+                        .onAppear(perform: router.topAppearingBlock)
+                        .onDisappear(perform: router.topDismissedBlock)
                         .environmentObject(router)
                 }
                 .iflet(router.alert) { rootView, alert  in
@@ -36,6 +38,8 @@ public struct RoutingView<RootView: View, Routes: ViewDisplayable>: View {
 #if !os(macOS)
                 .fullScreenCover(item: $router.fullScreenCover) {
                     $0.viewToDisplay
+                        .onAppear(perform: router.topAppearingBlock)
+                        .onDisappear(perform: router.topDismissedBlock)
                         .environmentObject(router)
                 }
 #endif
