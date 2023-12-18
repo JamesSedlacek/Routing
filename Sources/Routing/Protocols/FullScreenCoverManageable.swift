@@ -35,7 +35,7 @@ extension FullScreenCoverManageable {
     ///   - destination: The view to be presented as a sheet
     ///   - onAppear: on Appear action of presented view
     ///   - onDismissed: on Disappear action of presented View
-    public func presentSheet(_ destination: Destination, onAppear: CallBackHandler? = nil, onDismissed: CallBackHandler? = nil) {
+    public func presentFullScreenCover(_ destination: Destination, onAppear: CallBackHandler? = nil, onDismissed: CallBackHandler? = nil) {
         fullScreenCover = destination
         registerOnAppear(onAppear)
         registerOnDismiss(onDismissed)
