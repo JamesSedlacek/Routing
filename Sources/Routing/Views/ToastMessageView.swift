@@ -7,7 +7,6 @@
 import SwiftUI
 
 struct ToastMessageView: View {
-    private let backgroundColor: Color = Color(.secondarySystemBackground)
     private let toast: Toast
 
     init(_ toast: Toast) {
@@ -26,7 +25,7 @@ struct ToastMessageView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
-        .background(backgroundColor, in: .rect(cornerRadius: 10))
+        .background(Color.secondaryBackground, in: .rect(cornerRadius: 10))
         .overlay {
             RoundedRectangle(cornerRadius: 10)
                 .fill(toast.color.opacity(0.08))

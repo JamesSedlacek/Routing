@@ -26,3 +26,7 @@ extension Color {
 #endif
     }
 }
+
+extension Color {
+    static let secondaryBackground: Color = Color(.secondarySystemBackground)
+}
