@@ -7,43 +7,23 @@
 import SwiftUI
 
 public protocol ToastManageable: ObservableObject {
-    var toast: Toast? { get set }
-    var isToastPresented: Binding<Bool> { get set }
+    var toastConfig: ToastConfiguration? { get set }
 
-    // TODO: Update to accept an `edge` parameter
-    func presentToast(_ toast: Toast)
+    func presentToast(on edge: VerticalEdge,
+                      _ toast: Toast,
+                      isAutoDismissed: Bool)
     func dismissToast()
 }
 
 extension ToastManageable {
-    /// A computed property that returns a Binding<Bool> based on the presence of an Toast.
-    /// The getter returns true if an Toast is present, and false otherwise.
-    /// The setter sets the Toast to nil if the new value is false.
-    public var isToastPresented: Binding<Bool> {
-        get {
-            return Binding<Bool>(
-                get: { self.toast != nil },
-                set: { newValue in
-                    if !newValue {
-                        self.toast = nil
-                    }
-                }
-            )
-        }
-        set {
-            if !newValue.wrappedValue {
-                self.toast = nil
-            }
-        }
+    public func presentToast(on edge: VerticalEdge = .top,
+                             _ toast: Toast,
+                             isAutoDismissed: Bool = true) {
+        guard toastConfig == nil else { return }
+        self.toastConfig = .init(edge: edge, toast: toast, isAutoDismissed: isAutoDismissed)
     }
 
-    /// Presents an Toast to the user
-    public func presentToast(_ toast: Toast) {
-        self.toast = toast
-    }
-
-    /// Dismisses the currently presented Toast
     public func dismissToast() {
-        toast = nil
+        toastConfig = nil
     }
 }

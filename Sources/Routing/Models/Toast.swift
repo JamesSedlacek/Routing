@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-public struct Toast {
+public struct Toast: Identifiable {
+    public let id: UUID = .init()
     let icon: Image
     let color: Color
     let message: String

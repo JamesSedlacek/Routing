@@ -25,19 +25,17 @@ final class ToastManageableTests: XCTestCase {
     func testPresentToast() {
         let toast = Toast.info(message: "Test message")
         router.presentToast(toast)
-        XCTAssertNotNil(router.toast)
-        XCTAssertTrue(router.isToastPresented.wrappedValue)
+        XCTAssertNotNil(router.toastConfig)
     }
 
     func testDismissToast() {
         let toast = Toast.info(message: "Test message")
         router.presentToast(toast)
         router.dismissToast()
-        XCTAssertNil(router.toast)
-        XCTAssertFalse(router.isToastPresented.wrappedValue)
+        XCTAssertNil(router.toastConfig)
     }
 }
 
 fileprivate class MockToastManager: ToastManageable {
-    @Published var toast: Toast?
+    @Published var toastConfig: ToastConfiguration?
 }

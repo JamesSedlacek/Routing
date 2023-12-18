@@ -15,5 +15,5 @@ public final class Router<Routes: ViewDisplayable>: Routable {
     @Published public var sheet: Destination?
     @Published public var fullScreenCover: Destination?
     @Published public var alert: Alert?
-    @Published public var toast: Toast?
+    @Published public var toastConfig: ToastConfiguration?
 }

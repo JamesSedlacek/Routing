@@ -103,8 +103,10 @@ func dismissFullScreenCover()
 func presentAlert(_ alert: Alert)
 func dismissAlert()
 
-// Toast (not implemented yet)
-func presentToast(_ toast: Toast)
+// Toast
+func presentToast(on edge: VerticalEdge = .top,
+                  _ toast: Toast,
+                  isAutoDismissed: Bool = true)
 func dismissToast()
 ```
 
@@ -165,6 +167,13 @@ struct ExampleView: View {
                 router.presentAlert(.init(title: Text("Testing alerts"),
                                           primaryButton: .default(Text("OK")),
                                           secondaryButton: .cancel(Text("Cancel"))))
+            }
+            
+            // Example of using `presentToast`
+            Button("Show toast") {
+                router.presentToast(on: .bottom,
+                                    .success("Testing toast"),
+                                    isAutoDismissed: false)
             }
         }
     }
