@@ -7,12 +7,11 @@
 import SwiftUI
 
 /// A type that can be used to manage a sheet view
-public protocol SheetManageable: ObservableObject {
+public protocol SheetManageable: ObservableObject, ViewLifeCycle {
     associatedtype Destination: ViewDisplayable
 
     var sheet: Destination? { get set }
 
-    func presentSheet(_ destination: Destination)
     func dismissSheet()
 }
 
@@ -22,9 +21,21 @@ extension SheetManageable {
     public func presentSheet(_ destination: Destination) {
         sheet = destination
     }
-
+    
+    /// Presents a new sheet view
+    /// - Parameters:
+    ///   - destination: The view to be presented as a sheet
+    ///   - onAppear: on Appear action of presented view
+    ///   - onDismissed: on Disappear action of presented View
+    public func presentSheet(_ destination: Destination, onAppear: CallBackHandler? = nil, onDismissed: CallBackHandler? = nil) {
+        sheet = destination
+        registerOnAppear(onAppear)
+        registerOnDismiss(onDismissed)
+    }
+    
     /// Dismisses the currently presented sheet view
     public func dismissSheet() {
         sheet = nil
+        callDismiss()
     }
 }
