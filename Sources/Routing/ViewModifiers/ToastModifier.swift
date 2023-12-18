@@ -17,16 +17,9 @@ struct ToastModifier: ViewModifier {
     @Binding var isPresented: Bool
     let toast: Toast
 
-    var alignment: Alignment {
-        switch edge {
-        case .top: .top
-        case .bottom: .bottom
-        }
-    }
-
     func body(content: Content) -> some View {
         content
-            .overlay(alignment: alignment) {
+            .overlay(alignment: edge.alignment) {
                 ToastMessageView(toast)
                 // TODO: Animate using offset
             }
