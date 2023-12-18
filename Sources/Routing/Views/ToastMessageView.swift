@@ -8,6 +8,7 @@ import SwiftUI
 
 struct ToastMessageView: View {
     private let toast: Toast
+    private let cornerRadius: CGFloat = 10
 
     init(_ toast: Toast) {
         self.toast = toast
@@ -25,10 +26,11 @@ struct ToastMessageView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
-        .background(Color.secondaryBackground, in: .rect(cornerRadius: 10))
+        .background(Color.secondaryBackground, in: .rect(cornerRadius: cornerRadius))
         .overlay {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(toast.color.opacity(0.08))
+            toast.color.opacity(0.08)
+                .clipShape(.rect(cornerRadius: cornerRadius))
+            RoundedRectangle(cornerRadius: cornerRadius)
                 .stroke(toast.color, lineWidth: 2)
         }
         .padding()
