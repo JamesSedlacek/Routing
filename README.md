@@ -15,7 +15,7 @@
 - Simplifies code by removing navigation responsibilities from views.
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
-- Ridiculously **lightweight** (135 executable lines of code).
+- Ridiculously **lightweight**.
 - **Type-safe** routing using enums and associated values.
 - Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
@@ -102,6 +102,10 @@ func dismissFullScreenCover()
 // Alert
 func presentAlert(_ alert: Alert)
 func dismissAlert()
+
+// Toast (not implemented yet)
+func presentToast(_ toast: Toast)
+func dismissToast()
 ```
 
 <br>

@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-internal extension View {
+extension View {
     /// Closure given view and unwrapped optional value if optional is set.
     /// - Parameters:
     ///   - conditional: Optional value.
