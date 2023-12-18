@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A type that can be used to manage a sheet view
-public protocol FullScreenCoverManageable: ObservableObject {
+public protocol FullScreenCoverManageable: ObservableObject, ViewLifeCycle {
     associatedtype Destination: ViewDisplayable
 
     var fullScreenCover: Destination? { get set }
@@ -27,5 +27,17 @@ extension FullScreenCoverManageable {
     /// Dismisses the currently presented full screen cover
     public func dismissFullScreenCover() {
         fullScreenCover = nil
+        callDismiss()
+    }
+    
+    /// Presents a new sheet view
+    /// - Parameters:
+    ///   - destination: The view to be presented as a sheet
+    ///   - onAppear: on Appear action of presented view
+    ///   - onDismissed: on Disappear action of presented View
+    public func presentSheet(_ destination: Destination, onAppear: CallBackHandler? = nil, onDismissed: CallBackHandler? = nil) {
+        fullScreenCover = destination
+        registerOnAppear(onAppear)
+        registerOnDismiss(onDismissed)
     }
 }
