@@ -7,5 +7,5 @@ import Foundation
 public protocol Dismissable: AnyObject {
     typealias DismissAction = () -> Void
     
-    var onDismiss: DismissAction? { get set }
+    var onDismiss: Dismissable.DismissAction? { get set }
 }
