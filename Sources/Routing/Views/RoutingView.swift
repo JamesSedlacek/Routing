@@ -34,7 +34,7 @@ public struct RoutingView<RootView: View, Routes: ViewDisplayable>: View {
                     rootView.toast(isPresented: router.isToastPresented, toast: toast)
                 }
 #if !os(macOS)
-                .fullScreenCover(item: $router.fullScreenCover) {
+                .fullScreenCover(item: $router.fullScreenCover, onDismiss: router.onDismiss) {
                     $0.viewToDisplay
                         .environmentObject(router)
                 }
