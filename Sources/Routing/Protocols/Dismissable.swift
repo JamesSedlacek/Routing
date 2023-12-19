@@ -5,7 +5,7 @@
 import SwiftUI
 
 public protocol Dismissable: ObservableObject {
-    typealias CallBackHandler = ()-> Void
+    typealias DismissAction = ()-> Void
     
-    var onDismiss: CallBackHandler? { get set }
+    var onDismiss: DismissAction? { get set }
 }

@@ -26,7 +26,7 @@ extension SheetManageable {
     /// - Parameters:
     ///   - destination: The view to be presented as a sheet
     ///   - CallBackHandler: on Disappear action of presented View
-    public func presentSheet(_ destination: Destination, onDismiss: CallBackHandler? = nil) {
+    public func presentSheet(_ destination: Destination, onDismiss: DismissAction? = nil) {
         sheet = destination
         self.onDismiss = onDismiss
     }
