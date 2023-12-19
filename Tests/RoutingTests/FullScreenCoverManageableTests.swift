@@ -34,13 +34,13 @@ final class FullScreenCoverManageableTests: XCTestCase {
     }
     
     func testPresentOnDismissingAction() {
-
-        router.presentFullScreenCover(.settings, onDismiss: { })
-                
-        router.dismissFullScreenCover()
         
+        router.presentFullScreenCover(.settings, onDismiss: { })
         XCTAssertNotNil(router.onDismiss)
-        XCTAssertNil(router.fullScreenCover)
+
+        router.presentFullScreenCover(.settings)
+        XCTAssertNil(router.onDismiss)
+
     }
 }
 

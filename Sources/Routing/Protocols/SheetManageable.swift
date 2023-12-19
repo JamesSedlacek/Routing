@@ -16,12 +16,7 @@ public protocol SheetManageable: ObservableObject, Dismissable {
 }
 
 extension SheetManageable {
-    /// Presents a new sheet view
-    /// - Parameter destination: The view to be presented as a sheet
-    public func presentSheet(_ destination: Destination) {
-        sheet = destination
-    }
-    
+
     /// Presents a new sheet view
     /// - Parameters:
     ///   - destination: The view to be presented as a sheet
@@ -34,5 +29,6 @@ extension SheetManageable {
     /// Dismisses the currently presented sheet view
     public func dismissSheet() {
         sheet = nil
+        onDismiss = nil
     }
 }

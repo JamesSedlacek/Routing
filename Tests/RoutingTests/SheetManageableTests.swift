@@ -36,11 +36,10 @@ final class SheetManageableTests: XCTestCase {
     func testPresentOnDismissingAction() {
         
         router.presentSheet(.settings, onDismiss: { })
-                
-        router.dismissSheet()
-        
         XCTAssertNotNil(router.onDismiss)
-        XCTAssertNil(router.sheet)
+
+        router.presentSheet(.settings)
+        XCTAssertNil(router.onDismiss)
     }
 }
 
