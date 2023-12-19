@@ -25,17 +25,14 @@ extension SheetManageable {
     /// Presents a new sheet view
     /// - Parameters:
     ///   - destination: The view to be presented as a sheet
-    ///   - onAppear: on Appear action of presented view
-    ///   - onDismissed: on Disappear action of presented View
-    public func presentSheet(_ destination: Destination, onAppear: CallBackHandler? = nil, onDismissed: CallBackHandler? = nil) {
+    ///   - CallBackHandler: on Disappear action of presented View
+    public func presentSheet(_ destination: Destination, onDismiss: CallBackHandler? = nil) {
         sheet = destination
-        registerOnAppear(onAppear)
-        registerOnDismiss(onDismissed)
+        self.onDismiss = onDismiss
     }
     
     /// Dismisses the currently presented sheet view
     public func dismissSheet() {
         sheet = nil
-        callDismiss()
     }
 }

@@ -34,23 +34,13 @@ final class FullScreenCoverManageableTests: XCTestCase {
     }
     
     func test_present_onDismissingAction() {
-        
-        var dismissedCallCounter: Int = 0
-        let exp = expectation(description: "Wait until view dismissable")
-        
-        router.presentFullScreenCover(.settings, onDismissed: {
-            dismissedCallCounter += 1
-            exp.fulfill()
-        })
-        
-        XCTAssertEqual(router.onDismissedBlocks.count, 1)
-        
+
+        router.presentFullScreenCover(.settings, onDismiss: { })
+                
         router.dismissFullScreenCover()
         
-        wait(for: [exp], timeout: 0.5)
-        
+        XCTAssertNotNil(router.onDismiss)
         XCTAssertNil(router.fullScreenCover)
-        XCTAssertEqual(dismissedCallCounter, 1)
     }
 }
 
@@ -58,9 +48,7 @@ fileprivate class MockFullScreenCoverManager: FullScreenCoverManageable {
     
     typealias Destination = Route
     
-    var onAppearBlocks: [CallBackHandler?] = []
-    var onDismissedBlocks: [CallBackHandler?] = []
-
+    var onDismiss: CallBackHandler?
     @Published var fullScreenCover: Route?
 
     enum Route: ViewDisplayable {

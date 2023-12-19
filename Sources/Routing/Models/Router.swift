@@ -10,9 +10,7 @@ public typealias Routable = NavigationPathManageable & SheetManageable & FullScr
 
 public final class Router<Routes: ViewDisplayable>: Routable {
     
-    public var onAppearBlocks: [CallBackHandler?] = []
-    public var onDismissedBlocks: [CallBackHandler?] = []
-    
+    public var onDismiss: CallBackHandler?
     public typealias Destination = Routes
 
     @Published public var path: NavigationPath = .init()

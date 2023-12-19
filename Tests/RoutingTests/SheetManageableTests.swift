@@ -35,32 +35,20 @@ final class SheetManageableTests: XCTestCase {
     
     func test_present_onDismissingAction() {
         
-        var dismissedCallCounter: Int = 0
-        let exp = expectation(description: "Wait until view dismissable")
-        
-        router.presentSheet(.settings, onDismissed: {
-            dismissedCallCounter += 1
-            exp.fulfill()
-        })
-        
-        XCTAssertEqual(router.onDismissedBlocks.count, 1)
-        
+        router.presentSheet(.settings, onDismiss: { })
+                
         router.dismissSheet()
         
-        wait(for: [exp], timeout: 0.5)
-        
+        XCTAssertNotNil(router.onDismiss)
         XCTAssertNil(router.sheet)
-        XCTAssertEqual(dismissedCallCounter, 1)
-    }    
+    }
 }
 
 fileprivate class MockSheetManager: SheetManageable {
-    
-    var onAppearBlocks: [CallBackHandler?] = []
-    var onDismissedBlocks: [CallBackHandler?] = []
-    
-    typealias Destination = Route
 
+    typealias Destination = Route
+    
+    var onDismiss: CallBackHandler?
     @Published var sheet: Route?
 
     enum Route: ViewDisplayable {
