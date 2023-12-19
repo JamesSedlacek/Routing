@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A type that can be used to manage a sheet view
-public protocol SheetManageable: ObservableObject, ViewLifeCycle {
+public protocol SheetManageable: ObservableObject, Dismissable {
     associatedtype Destination: ViewDisplayable
 
     var sheet: Destination? { get set }

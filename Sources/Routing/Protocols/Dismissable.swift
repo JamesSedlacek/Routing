@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public protocol ViewLifeCycle: ObservableObject {
+public protocol Dismissable: ObservableObject {
     typealias CallBackHandler = ()-> Void
     
     var onDismiss: CallBackHandler? { get set }

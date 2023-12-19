@@ -7,7 +7,7 @@
 import SwiftUI
 
 /// A type that can be used to manage a sheet view
-public protocol FullScreenCoverManageable: ObservableObject, ViewLifeCycle {
+public protocol FullScreenCoverManageable: ObservableObject, Dismissable {
     associatedtype Destination: ViewDisplayable
 
     var fullScreenCover: Destination? { get set }
