@@ -2,10 +2,10 @@
 //  Created by Ahmed Fathy on 18/12/2023.
 //
 
-import SwiftUI
+import Foundation
 
-public protocol Dismissable: ObservableObject {
-    typealias DismissAction = ()-> Void
+public protocol Dismissable: AnyObject {
+    typealias DismissAction = () -> Void
     
     var onDismiss: DismissAction? { get set }
 }

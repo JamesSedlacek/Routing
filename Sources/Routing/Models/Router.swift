@@ -9,8 +9,7 @@ import SwiftUI
 public typealias Routable = NavigationPathManageable & SheetManageable & FullScreenCoverManageable & AlertManageable & ToastManageable
 
 public final class Router<Routes: ViewDisplayable>: Routable {
-    
-    public var onDismiss: CallBackHandler?
+    public var onDismiss: Dismissable.DismissAction?
     public typealias Destination = Routes
 
     @Published public var path: NavigationPath = .init()

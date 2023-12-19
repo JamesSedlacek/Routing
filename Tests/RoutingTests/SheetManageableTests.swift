@@ -33,7 +33,7 @@ final class SheetManageableTests: XCTestCase {
         XCTAssertNil(router.sheet)
     }
     
-    func test_present_onDismissingAction() {
+    func testPresentOnDismissingAction() {
         
         router.presentSheet(.settings, onDismiss: { })
                 
@@ -48,7 +48,7 @@ fileprivate class MockSheetManager: SheetManageable {
 
     typealias Destination = Route
     
-    var onDismiss: CallBackHandler?
+    var onDismiss: Dismissable.DismissAction?
     @Published var sheet: Route?
 
     enum Route: ViewDisplayable {

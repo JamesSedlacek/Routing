@@ -33,7 +33,7 @@ final class FullScreenCoverManageableTests: XCTestCase {
         XCTAssertNil(router.fullScreenCover)
     }
     
-    func test_present_onDismissingAction() {
+    func testPresentOnDismissingAction() {
 
         router.presentFullScreenCover(.settings, onDismiss: { })
                 
@@ -45,10 +45,9 @@ final class FullScreenCoverManageableTests: XCTestCase {
 }
 
 fileprivate class MockFullScreenCoverManager: FullScreenCoverManageable {
-    
     typealias Destination = Route
     
-    var onDismiss: CallBackHandler?
+    var onDismiss: Dismissable.DismissAction?
     @Published var fullScreenCover: Route?
 
     enum Route: ViewDisplayable {
