@@ -71,7 +71,7 @@ Pass in the Route enumeration, so that the RouterView can use the Routes.
 
 ``` swift
 import SwiftUI
-import Presenting
+import Routing
 
 struct ContentView: View {
     var body: some View {
