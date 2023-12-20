@@ -66,20 +66,37 @@ enum Route: ViewDisplayable {
 }
 ```
 
-2. The RoutingView will be used instead of a NavigationStack.
-Pass in the Route enumeration, so that the RouterView can use them. 
+2. The RoutingView will be used to inject the Router object into the view model. 
+Pass in the Route enumeration, so that the RouterView can use the Routes. 
 
 ``` swift
 import SwiftUI
-import Routing
+import Presenting
 
 struct ContentView: View {
     var body: some View {
         RoutingView(Route.self) { router in
-            // Main Content goes here
+            ExampleView(viewModel: .init(router: router))
         }
     }
 }
+
+struct ExampleView: View {
+    @ObservedObject var viewModel: ExampleViewModel
+    
+    var body: some View {
+        // The app's main content goes here
+    }
+}
+
+final class ExampleViewModel: ObservableObject {
+    private let router: Router<Route>
+    
+    init(router: Router<Route>) {
+        self.router = router
+    }
+}
+
 ```
 
 3. Handle navigation using the Router functions
@@ -90,111 +107,22 @@ func pop(_ count: Int)
 func popToRoot()
 func push(_ destination: Destination)
 func push(_ destinations: [Destination])
-
-// Sheet
-func presentSheet(_ destination: Destination)
-func dismissSheet()
-
-// FullScreenCover
-func presentFullScreenCover(_ destination: Destination)
-func dismissFullScreenCover()
-
-// Alert
-func presentAlert(_ alert: Alert)
-func dismissAlert()
-
-// Toast
-func presentToast(on edge: VerticalEdge = .top,
-                  _ toast: Toast,
-                  isAutoDismissed: Bool = true)
-func dismissToast()
 ```
 
 <br>
 
-## Router In View Example
-
-```swift
-import SwiftUI
-import Routing
-
-enum ExampleRoute: ViewDisplayable {
-    case detail
-    case settings
-    
-    @ViewBuilder
-    var viewToDisplay: some View {
-        switch self {
-        case .detail:
-            DetailView()
-        case .settings:
-            SettingsView()
-        }
-    }
-}
-
-struct ExampleView: View {
-    var body: some View {
-        RoutingView(ExampleRoute.self) { router in
-    
-            // Example of using `push`
-            Button("Go to Detail View") {
-                router.push(.detail)
-            }
-    
-            // Example of using `pop`
-            Button("Go back") {
-                router.pop()
-            }
-        
-            // Example of using `popToRoot`
-            Button("Go back to Root") {
-                router.popToRoot()
-            }
-            
-            // Example of using `presentSheet`
-            Button("Present Settings View") {
-                router.presentSheet(.settings)
-            }
-            
-            // Example of using `presentFullScreenCover`
-            Button("Present Settings View") {
-                router.presentFullScreenCover(.settings)
-            }
-
-            // Example of using `presentAlert`
-            Button("Show alert") {
-                router.presentAlert(.init(title: Text("Testing alerts"),
-                                          primaryButton: .default(Text("OK")),
-                                          secondaryButton: .cancel(Text("Cancel"))))
-            }
-            
-            // Example of using `presentToast`
-            Button("Show toast") {
-                router.presentToast(on: .bottom,
-                                    .success("Testing toast"),
-                                    isAutoDismissed: false)
-            }
-        }
-    }
-}
-```
-
-## ViewModel Example
+## Settings Screen Example
 
 ``` swift
 import SwiftUI
 import Routing
 
 enum ExampleRoute: ViewDisplayable {
-    case detail
     case settings
     
     @ViewBuilder
     var viewToDisplay: some View {
         switch self {
-        case .detail:
-            DetailView()
         case .settings:
             SettingsView()
         }
@@ -208,16 +136,8 @@ class ExampleViewModel: ObservableObject {
         self.router = router
     }
 
-    func goToDetailView() {
-        router.push(.detail)
-    }
-
-    func goBack() {
-        router.pop()
-    }
-
-    func goBackToRoot() {
-        router.popToRoot()
+    func didTapSettings() {
+        router.push(.settings)
     }
 }
 
@@ -226,17 +146,7 @@ struct ExampleView: View {
 
     var body: some View {
         VStack {
-            Button("Go to Detail View") {
-                viewModel.goToDetailView()
-            }
-
-            Button("Go back") {
-                viewModel.goBack()
-            }
-
-            Button("Go back to Root") {
-                viewModel.goBackToRoot()
-            }
+            Button("Settings", action: viewModel.didTapSettings)
         }
     }
 }
