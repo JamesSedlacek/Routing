@@ -11,7 +11,7 @@
 
 ## Description
 
-`Routing` is a framework for abstracting navigation logic from views in SwiftUI.
+`Routing` is a library for abstracting navigation logic from views in SwiftUI.
 - Simplifies code by removing navigation responsibilities from views.
 - Leads to cleaner, more manageable code.
 - Promotes better separation of concerns.
@@ -19,6 +19,9 @@
 - **Type-safe** routing using enums and associated values.
 - Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
+
+Note - This library is for **NavigationPath** only. If you need to abstract sheets, alerts, etc. then use my other library [`Presenting`](https://github.com/JamesSedlacek/Presenting)
+
 
 <br>
 
