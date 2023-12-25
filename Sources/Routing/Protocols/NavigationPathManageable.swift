@@ -10,7 +10,7 @@ import SwiftUI
 public protocol NavigationPathManageable: ObservableObject {
     associatedtype Destination: ViewDisplayable
 
-    var path: [ViewDisplayable] { get set }
+    var path: [Destination] { get set }
 
     func popTo(_ destination: Destination)
     func popToRoot()
