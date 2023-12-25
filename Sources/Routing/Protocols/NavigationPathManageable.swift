@@ -10,28 +10,27 @@ import SwiftUI
 public protocol NavigationPathManageable: ObservableObject {
     associatedtype Destination: ViewDisplayable
 
-    var path: NavigationPath { get set }
+    var path: [Destination] { get set }
 
-    func pop(_ count: Int)
+    func popTo(_ destination: Destination)
     func popToRoot()
     func push(_ destination: Destination)
     func push(_ destinations: [Destination])
 }
 
 extension NavigationPathManageable {
-    /// Removes the specified number of destinations from the navigation path
-    /// - Parameter count: The number of views to be popped from the navigation path
-    public func pop(_ count: Int = 1) {
-        guard count <= path.count else {
-            path = .init()
-            return
-        }
-        path.removeLast(count)
+    // Function to pop the navigation stack up to a specified destination
+    public func popTo(_ destination: Destination) {
+         // Check if the route exists in the stack
+          if let index = path.lastIndex(where: { $0 == destination }) {
+              // Remove routes above the specified route
+              path = Array(path.prefix(upTo: index + 1))
+          }
     }
 
     /// Resets the navigation path to its initial state
     public func popToRoot() {
-        path = .init()
+        path = []
     }
 
     /// Pushes a new view onto the navigation path
