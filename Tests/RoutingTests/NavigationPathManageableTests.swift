@@ -9,8 +9,8 @@ import XCTest
 import SwiftUI
 @testable import Routing
 
-final class NavigationPathManageableTests: XCTestCase {
-    private var router: MockNavigationPathManager!
+final class NavigationStackManageableTests: XCTestCase {
+    private var router: MockNavigationStackManager!
 
     override func setUp() {
         super.setUp()
@@ -69,7 +69,7 @@ final class NavigationPathManageableTests: XCTestCase {
     }
 }
 
-fileprivate class MockNavigationPathManager: NavigationStackManageable {
+fileprivate class MockNavigationStackManager: NavigationStackManageable {
     typealias Destination = Route
     @Published var stack: [Route] = []
 
@@ -81,8 +81,8 @@ fileprivate class MockNavigationPathManager: NavigationStackManageable {
             switch self {
             case .settings:
                 MockSettingsView()
-                case .profile:
-                    MockProfileView()
+            case .profile:
+                MockProfileView()
             }
         }
     }
