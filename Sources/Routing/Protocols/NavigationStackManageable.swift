@@ -1,5 +1,5 @@
 //
-//  NavigationPathManageable.swift
+//  NavigationStackManageable.swift
 //
 //  Created by James Sedlacek on 12/16/23.
 //
