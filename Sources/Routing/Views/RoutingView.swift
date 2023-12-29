@@ -15,7 +15,7 @@ public struct RoutingView<RootView: View, Routes: ViewDisplayable>: View {
     }
 
     public var body: some View {
-        NavigationStack(path: $router.path) {
+        NavigationStack(path: $router.stack) {
             rootView(router)
                 .navigationDestination(for: Router<Routes>.Destination.self) {
                     $0.viewToDisplay
