@@ -1,6 +1,5 @@
 //
-//  NavigationStackManageableTests.swift
-//  
+//  RoutableTests.swift
 //
 //  Created by James Sedlacek on 12/16/23.
 //
@@ -9,8 +8,8 @@ import XCTest
 import SwiftUI
 @testable import Routing
 
-final class NavigationStackManageableTests: XCTestCase {
-    private var router: MockNavigationStackManager!
+final class RoutableTests: XCTestCase {
+    private var router: MockRouter!
 
     override func setUp() {
         super.setUp()
@@ -67,9 +66,23 @@ final class NavigationStackManageableTests: XCTestCase {
         XCTAssertEqual(router.stack.count, 4)
         XCTAssertEqual(router.stack, [.settings, .profile, .settings, .profile])
     }
+
+    func testPopToNonexistentDestination() {
+        router.push([.settings, .settings, .settings])
+        router.pop(to: .profile)
+        XCTAssertEqual(router.stack.count, 3)
+        XCTAssertEqual(router.stack, [.settings, .settings, .settings])
+    }
+
+    func testPopToSpecifiedDestinationWhenOnTop() {
+        router.push([.settings, .profile])
+        router.pop(to: .profile)
+        XCTAssertEqual(router.stack.count, 2)
+        XCTAssertEqual(router.stack, [.settings, .profile])
+    }
 }
 
-fileprivate class MockNavigationStackManager: NavigationStackManageable {
+fileprivate class MockRouter: Routable {
     typealias Destination = Route
     @Published var stack: [Route] = []
 

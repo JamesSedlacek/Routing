@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-public final class Router<Routes: ViewDisplayable>: NavigationStackManageable {
+public final class Router<Routes: ViewDisplayable>: Routable {
     public typealias Destination = Routes
 
     @Published public var stack: [Routes] = []
