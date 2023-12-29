@@ -12,15 +12,26 @@ public protocol NavigationPathManageable: ObservableObject {
 
     var path: [Destination] { get set }
 
-    func popTo(_ destination: Destination)
+    func pop(_ count: Int)
+    func pop(to destination: Destination)
     func popToRoot()
     func push(_ destination: Destination)
     func push(_ destinations: [Destination])
 }
 
 extension NavigationPathManageable {
+     /// Removes the specified number of destinations from the navigation path
+    /// - Parameter count: The number of views to be popped from the navigation path
+    public func pop(_ count: Int = 1) {
+        guard count <= path.count else {
+            path = .init()
+            return
+        }
+        path.removeLast(count)
+    }
+    
     // Function to pop the navigation stack up to a specified destination
-    public func popTo(_ destination: Destination) {
+    public func pop(to destination: Destination) {
          // Check if the destination exists in the stack
           if let index = path.lastIndex(where: { $0 == destination }) {
               // Remove destinations above the specified destination
