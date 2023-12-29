@@ -105,11 +105,24 @@ final class ExampleViewModel: ObservableObject {
 3. Handle navigation using the Router functions
 
 ```swift
-// NavigationPath
-func pop(_ count: Int)
-func popToRoot()
-func push(_ destination: Destination)
-func push(_ destinations: [Destination])
+/// Pop destinations from the stack.
+/// - Parameter count: The number of destinations to pop. Default is 1.
+public func pop(_ count: Int = 1)
+
+/// Pop destinations until the specified destination is reached.
+/// - Parameter destination: The destination to pop to.
+public func pop(to destination: Destination)
+
+/// Pop all destinations, returning to the root.
+public func popToRoot()
+
+/// Push a new destination onto the stack.
+/// - Parameter destination: The destination to push.
+public func push(_ destination: Destination)
+
+/// Push a list of destinations onto the stack.
+/// - Parameter destinations: The destinations to push.
+public func push(_ destinations: [Destination])
 ```
 
 <br>
