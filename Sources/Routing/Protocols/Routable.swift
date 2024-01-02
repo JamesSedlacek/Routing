@@ -17,6 +17,7 @@ public protocol Routable: ObservableObject {
     func popToRoot()
     func push(_ destination: Destination)
     func push(_ destinations: [Destination])
+    func replace(with destinations: [Destination])
 }
 
 extension Routable {
@@ -57,5 +58,11 @@ extension Routable {
         for destination in destinations {
             stack.append(destination)
         }
+    }
+
+    /// Replace the current destinations stack with the input stack.
+    /// - Parameter destinations: The new destinations stack.
+    public func replace(with destinations: [Destination]) {
+        stack = destinations
     }
 }
