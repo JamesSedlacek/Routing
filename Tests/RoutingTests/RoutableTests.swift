@@ -80,6 +80,20 @@ final class RoutableTests: XCTestCase {
         XCTAssertEqual(router.stack.count, 2)
         XCTAssertEqual(router.stack, [.settings, .profile])
     }
+
+    func testReplaceWithEmptyDestinations() {
+        router.push([.settings, .profile, .settings])
+        router.replace(with: [])
+        XCTAssert(router.stack.isEmpty)
+        XCTAssertEqual(router.stack, [MockRouter.Route]())
+    }
+
+    func testReplaceWithDestinations() {
+        router.push([.settings, .settings])
+        router.replace(with: [.settings, .profile, .settings])
+        XCTAssertEqual(router.stack.count, 3)
+        XCTAssertEqual(router.stack, [.settings, .profile, .settings])
+    }
 }
 
 fileprivate class MockRouter: Routable {

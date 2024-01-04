@@ -123,6 +123,10 @@ public func push(_ destination: Destination)
 /// Push a list of destinations onto the stack.
 /// - Parameter destinations: The destinations to push.
 public func push(_ destinations: [Destination])
+
+/// Replace the current destinations stack with the input stack.
+/// - Parameter destinations: The new destinations stack.
+public func replace(with destinations: [Destination])
 ```
 
 <br>
