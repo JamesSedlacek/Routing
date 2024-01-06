@@ -19,4 +19,8 @@ extension ViewDisplayable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
+
+    static public func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
 }
