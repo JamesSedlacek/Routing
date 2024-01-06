@@ -47,7 +47,7 @@ https://github.com/JamesSedlacek/Routing.git
 
 ## Getting Started
 
-1. Create the "Route" enum where views will navigate to.
+1. Create a `Route` enum that conforms to the `ViewDisplayable` protocol.
 
 ``` swift
 import SwiftUI
@@ -69,8 +69,8 @@ enum Route: ViewDisplayable {
 }
 ```
 
-2. The RoutingView will be used to inject the Router object into the view model. 
-Pass in the Route enumeration, so that the RouterView can use the Routes. 
+2. The `RoutingView` will be used to inject the `Router` object into the view model. 
+Pass in the `Route` enum as a parameter, so that the `RouterView` can use the Routes. 
 
 ``` swift
 import SwiftUI
@@ -102,7 +102,7 @@ final class ExampleViewModel: ObservableObject {
 
 ```
 
-3. Handle navigation using the Router functions
+3. Handle navigation using the `Router` functions
 
 ```swift
 /// Pop destinations from the stack.
