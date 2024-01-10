@@ -22,6 +22,16 @@ If you need to abstract sheets, alerts, etc. then use my other library [`Present
 
 <br>
 
+## Table of Contents
+1. [Requirements](#requirements)
+2. [Installation](#installation)
+3. [Getting Started](#getting-started)
+4. [Passing Data Example](#passing-data-example)
+5. [Under the hood](#under-the-hood)
+6. [Author](#author)
+
+<br>
+
 ## Requirements
 
 | Platform | Minimum Version |
@@ -131,6 +141,81 @@ struct SettingsView: View {
     var body: some View {
         Button("Go Back") {
             router.navigateBack()
+        }
+    }
+}
+```
+
+<br>
+
+## Passing Data Example
+
+```swift
+import Routing
+import SwiftUI
+
+enum ContentRoute: Routable {
+    case detail(Color)
+    case settings
+
+    var body: some View {
+        switch self {
+        case .detail(let color):
+            ColorDetail(color: color)
+        case .settings:
+            SettingsView()
+        }
+    }
+}
+
+struct ContentView: View {
+    private let colors: [Color] = [.red, .green, .blue]
+
+    var body: some View {
+        RoutingView(ContentRoute.self) { router in
+            List(colors, id: \.self) { color in
+                color
+                    .onTapGesture {
+                        router.navigate(to: .detail(color))
+                    }
+            }
+        }
+    }
+}
+
+struct ColorDetail: View {
+    @EnvironmentObject
+    private var router: Router<ContentRoute>
+    private let color: Color
+
+    init(color: Color) {
+        self.color = color
+    }
+
+    var body: some View {
+        color
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .toolbar { toolbarContentView }
+    }
+
+    private var toolbarContentView: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                router.navigate(to: .settings)
+            } label: {
+                Image(systemName: "gearshape")
+            }
+        }
+    }
+}
+
+struct SettingsView: View {
+    @EnvironmentObject
+    private var router: Router<ContentRoute>
+
+    var body: some View {
+        Button("Go back to Root") {
+            router.navigateToRoot()
         }
     }
 }
