@@ -5,8 +5,10 @@ import PackageDescription
 let package = Package(
     name: "Routing",
     platforms: [
+        .iOS(.v16),
         .macOS(.v13),
-        .iOS(.v16)
+        .tvOS(.v16),
+        .watchOS(.v9)
     ],
     products: [
         .library(

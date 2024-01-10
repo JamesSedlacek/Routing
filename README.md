@@ -24,8 +24,12 @@ If you need to abstract sheets, alerts, etc. then use my other library [`Present
 
 ## Requirements
 
-- **iOS**: Requires iOS 16.0 or later.
-- **macOS**: Requires macOS 13.0 or later.
+| Platform | Minimum Version |
+|----------|-----------------|
+| iOS      | 16.0            |
+| macOS    | 13.0            |
+| tvOS     | 16.0            |
+| watchOS  | 9.0             |
 
 <br>
 
