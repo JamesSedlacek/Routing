@@ -24,6 +24,7 @@ extension Routable {
     /// Pop destinations from the stack.
     /// - Parameter count: The number of destinations to pop. Default is 1.
     public func pop(_ count: Int = 1) {
+        guard count > 0 else { return }
         guard count <= stack.count else {
             stack = .init()
             return

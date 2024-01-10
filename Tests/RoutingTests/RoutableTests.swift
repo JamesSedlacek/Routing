@@ -38,6 +38,20 @@ final class RoutableTests: XCTestCase {
         XCTAssert(router.stack.isEmpty)
     }
 
+    func testPopZero() {
+        router.push(.settings)
+        XCTAssertEqual(router.stack.count, 1)
+        router.pop(0)
+        XCTAssertEqual(router.stack.count, 1)
+    }
+
+    func testPopNegative() {
+        router.push(.settings)
+        XCTAssertEqual(router.stack.count, 1)
+        router.pop(-1)
+        XCTAssertEqual(router.stack.count, 1)
+    }
+
     func testPopMultiple() {
         router.push([.settings, .settings, .settings])
         XCTAssertEqual(router.stack.count, 3)
