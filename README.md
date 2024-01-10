@@ -11,17 +11,13 @@
 
 ## Description
 
-`Routing` is a library for abstracting navigation logic from views in SwiftUI.
-- Simplifies code by removing navigation responsibilities from views.
-- Leads to cleaner, more manageable code.
-- Promotes better separation of concerns.
-- Ridiculously **lightweight**.
-- **Type-safe** routing using enums and associated values.
+`Routing` is a **lightweight** SwiftUI navigation library.
+- Leverages `NavigationStack` & `NavigationDestination`.
 - Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
 
-Note - This library is for **NavigationPath** only. If you need to abstract sheets, alerts, etc. then use my other library [`Presenting`](https://github.com/JamesSedlacek/Presenting)
-
+Note - This library is for **NavigationStack** only. <br>
+If you need to abstract sheets, alerts, etc. then use my other library [`Presenting`](https://github.com/JamesSedlacek/Presenting)
 
 <br>
 
@@ -47,18 +43,17 @@ https://github.com/JamesSedlacek/Routing.git
 
 ## Getting Started
 
-1. Create a `Route` enum that conforms to the `ViewDisplayable` protocol.
+1. Create a `Route` enum that conforms to the `Routable` protocol.
 
 ``` swift
-import SwiftUI
 import Routing
+import SwiftUI
 
-enum Route: ViewDisplayable {
+enum ExampleRoute: Routable {
     case detail
     case settings
     
-    @ViewBuilder
-    var viewToDisplay: some View {
+    var body: some View {
         switch self {
         case .detail:
             DetailView()
@@ -69,8 +64,7 @@ enum Route: ViewDisplayable {
 }
 ```
 
-2. The `RoutingView` will be used to inject the `Router` object into the view model. 
-Pass in the `Route` enum as a parameter, so that the `RouterView` can use the Routes. 
+2. Wrap your `RootView` with a `RoutingView`. 
 
 ``` swift
 import SwiftUI
@@ -79,104 +73,64 @@ import Routing
 struct ContentView: View {
     var body: some View {
         RoutingView(Route.self) { router in
-            ExampleView(viewModel: .init(router: router))
+            Button("Go to Settings") {
+                router.navigate(to: .settings)
+            }
         }
     }
 }
-
-struct ExampleView: View {
-    @ObservedObject var viewModel: ExampleViewModel
-    
-    var body: some View {
-        // The app's main content goes here
-    }
-}
-
-final class ExampleViewModel: ObservableObject {
-    private let router: Router<Route>
-    
-    init(router: Router<Route>) {
-        self.router = router
-    }
-}
-
 ```
 
 3. Handle navigation using the `Router` functions
 
 ```swift
-/// Pop destinations from the stack.
-/// - Parameter count: The number of destinations to pop. Default is 1.
-public func pop(_ count: Int = 1)
+/// Navigate back in the stack by a specified count.
+func navigateBack(_ count: Int)
 
-/// Pop destinations until the specified destination is reached.
-/// - Parameter destination: The destination to pop to.
-public func pop(to destination: Destination)
+/// Navigate back to a specific destination in the stack.
+func navigateBack(to destination: Destination)
 
-/// Pop all destinations, returning to the root.
-public func popToRoot()
+/// Navigate to the root of the stack by emptying it.
+func navigateToRoot()
 
-/// Push a new destination onto the stack.
-/// - Parameter destination: The destination to push.
-public func push(_ destination: Destination)
+/// Navigate to a specific destination by appending it to the stack.
+func navigate(to destination: Destination)
 
-/// Push a list of destinations onto the stack.
-/// - Parameter destinations: The destinations to push.
-public func push(_ destinations: [Destination])
+/// Navigate to multiple destinations by appending them to the stack.
+func navigate(to destinations: [Destination])
 
-/// Replace the current destinations stack with the input stack.
-/// - Parameter destinations: The new destinations stack.
-public func replace(with destinations: [Destination])
+/// Replace the current stack with new destinations.
+func replace(with destinations: [Destination])
 ```
 
-<br>
-
-## Settings Screen Example
-
+4. Child Views have access to the `Router` object through the environment.
 ``` swift
 import SwiftUI
 import Routing
 
-enum ExampleRoute: ViewDisplayable {
-    case settings
+struct SettingsView: View {
+    @EnvironmentObject
+    private var router: Router<ExampleRoute>
     
-    @ViewBuilder
-    var viewToDisplay: some View {
-        switch self {
-        case .settings:
-            SettingsView()
-        }
-    }
-}
-
-class ExampleViewModel: ObservableObject {
-    private let router: Router<ExampleRoute>
-
-    init(router: Router<ExampleRoute>) {
-        self.router = router
-    }
-
-    func didTapSettings() {
-        router.push(.settings)
-    }
-}
-
-struct ExampleView: View {
-    @StateObject var viewModel: ExampleViewModel
-
     var body: some View {
-        VStack {
-            Button("Settings", action: viewModel.didTapSettings)
+        Button("Go Back") {
+            router.navigateBack()
         }
     }
 }
+```
 
-struct ContentView: View {
-    var body: some View {
-        RoutingView(ExampleRoute.self) { router in
-            ExampleView(viewModel: .init(router: router))
+<br>
+
+## Under the hood
+
+The `RoutingView` essentially is just wrapping your view with a `NavigationStack` & `navigationDestination`.
+``` swift
+NavigationStack(path: $router.stack) {
+    rootView(router)
+        .navigationDestination(for: Router<Routes>.Destination.self) { route in
+            route.body.environmentObject(router)
         }
-    }
 }
 ```
 

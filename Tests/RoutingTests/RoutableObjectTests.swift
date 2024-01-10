@@ -1,5 +1,5 @@
 //
-//  RoutableTests.swift
+//  RoutableObjectTests.swift
 //
 //  Created by James Sedlacek on 12/16/23.
 //
@@ -8,8 +8,8 @@ import XCTest
 import SwiftUI
 @testable import Routing
 
-final class RoutableTests: XCTestCase {
-    private var router: MockRouter!
+final class RoutableObjectTests: XCTestCase {
+    private var router: Router<MockRoute>!
 
     override func setUp() {
         super.setUp()
@@ -21,110 +21,104 @@ final class RoutableTests: XCTestCase {
         super.tearDown()
     }
 
-    func testPush() {
-        router.push(.settings)
+    func testNavigate() {
+        router.navigate(to: .settings)
         XCTAssertEqual(router.stack.count, 1)
     }
 
-    func testPushMultiple() {
-        router.push([.settings, .settings, .settings])
+    func testNavigateMultiple() {
+        router.navigate(to: [.settings, .settings, .settings])
         XCTAssertEqual(router.stack.count, 3)
     }
 
-    func testPop() {
-        router.push(.settings)
+    func testNavigateBack() {
+        router.navigate(to: .settings)
         XCTAssertEqual(router.stack.count, 1)
-        router.pop()
+        router.navigateBack()
         XCTAssert(router.stack.isEmpty)
     }
 
-    func testPopZero() {
-        router.push(.settings)
+    func testNavigateBackZero() {
+        router.navigate(to: .settings)
         XCTAssertEqual(router.stack.count, 1)
-        router.pop(0)
-        XCTAssertEqual(router.stack.count, 1)
-    }
-
-    func testPopNegative() {
-        router.push(.settings)
-        XCTAssertEqual(router.stack.count, 1)
-        router.pop(-1)
+        router.navigateBack(0)
         XCTAssertEqual(router.stack.count, 1)
     }
 
-    func testPopMultiple() {
-        router.push([.settings, .settings, .settings])
+    func testNavigateBackNegative() {
+        router.navigate(to: .settings)
+        XCTAssertEqual(router.stack.count, 1)
+        router.navigateBack(-1)
+        XCTAssertEqual(router.stack.count, 1)
+    }
+
+    func testNavigateBackMultiple() {
+        router.navigate(to: [.settings, .settings, .settings])
         XCTAssertEqual(router.stack.count, 3)
-        router.pop(2)
+        router.navigateBack(2)
         XCTAssertEqual(router.stack.count, 1)
     }
 
-    func testPopTooMany() {
-        router.push([.settings, .settings, .settings])
+    func testNavigateBackTooMany() {
+        router.navigate(to: [.settings, .settings, .settings])
         XCTAssertEqual(router.stack.count, 3)
-        router.pop(4)
+        router.navigateBack(4)
         XCTAssert(router.stack.isEmpty)
     }
 
-    func testPopToRoot() {
-        router.push(.settings)
-        router.push(.settings)
+    func testNavigateBackToRoot() {
+        router.navigate(to: .settings)
+        router.navigate(to: .settings)
         XCTAssertEqual(router.stack.count, 2)
-        router.popToRoot()
+        router.navigateToRoot()
         XCTAssert(router.stack.isEmpty)
     }
     
-    func testPopToSpecifiedDestination() {
-        router.push([.settings, .profile, .settings, .profile, .settings])
-        router.pop(to: .profile)
+    func testNavigateBackToSpecifiedDestination() {
+        router.navigate(to: [.settings, .profile, .settings, .profile, .settings])
+        router.navigateBack(to: .profile)
         XCTAssertEqual(router.stack.count, 4)
         XCTAssertEqual(router.stack, [.settings, .profile, .settings, .profile])
     }
 
-    func testPopToNonexistentDestination() {
-        router.push([.settings, .settings, .settings])
-        router.pop(to: .profile)
+    func testNavigateBackToNonexistentDestination() {
+        router.navigate(to: [.settings, .settings, .settings])
+        router.navigateBack(to: .profile)
         XCTAssertEqual(router.stack.count, 3)
         XCTAssertEqual(router.stack, [.settings, .settings, .settings])
     }
 
-    func testPopToSpecifiedDestinationWhenOnTop() {
-        router.push([.settings, .profile])
-        router.pop(to: .profile)
+    func testNavigateBackToSpecifiedDestinationWhenOnTop() {
+        router.navigate(to: [.settings, .profile])
+        router.navigateBack(to: .profile)
         XCTAssertEqual(router.stack.count, 2)
         XCTAssertEqual(router.stack, [.settings, .profile])
     }
 
     func testReplaceWithEmptyDestinations() {
-        router.push([.settings, .profile, .settings])
+        router.navigate(to: [.settings, .profile, .settings])
         router.replace(with: [])
         XCTAssert(router.stack.isEmpty)
-        XCTAssertEqual(router.stack, [MockRouter.Route]())
     }
 
     func testReplaceWithDestinations() {
-        router.push([.settings, .settings])
+        router.navigate(to: [.settings, .settings])
         router.replace(with: [.settings, .profile, .settings])
         XCTAssertEqual(router.stack.count, 3)
         XCTAssertEqual(router.stack, [.settings, .profile, .settings])
     }
 }
 
-fileprivate class MockRouter: Routable {
-    typealias Destination = Route
-    @Published var stack: [Route] = []
+fileprivate enum MockRoute: Routable {
+    case settings
+    case profile
 
-    enum Route: ViewDisplayable {
-        case settings, profile
-
-        @ViewBuilder
-        var viewToDisplay: some View {
-            switch self {
-            case .settings:
-                MockSettingsView()
-            case .profile:
-                MockProfileView()
-            }
+    var body: some View {
+        switch self {
+        case .settings:
+            MockSettingsView()
+        case .profile:
+            MockProfileView()
         }
     }
 }
