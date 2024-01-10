@@ -37,11 +37,22 @@ If you need to abstract sheets, alerts, etc. then use my other library [`Present
 
 You can install `Routing` using the Swift Package Manager.
 
-1. In Xcode, select "File" > "Add Package Dependencies".
+1. In Xcode, select `File` > `Add Package Dependencies`.
+<p align="left">
+  <img src = "https://github.com/JamesSedlacek/Routing/blob/main/Assets/Installation1.png">
+</p>
+<br>
+
 2. Copy & paste the following into the "Search or Enter Package URL" search bar.
 ```
 https://github.com/JamesSedlacek/Routing.git
 ```
+
+<p align="left">
+  <img src = "https://github.com/JamesSedlacek/Routing/blob/main/Assets/Installation2.png">
+</p>
+<br>
+
 4. Xcode will fetch the repository & the "Routing" library will be added to your project.
 
 <br>
