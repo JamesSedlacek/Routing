@@ -12,7 +12,8 @@
 ## Description
 
 `Routing` is a **lightweight** SwiftUI navigation library.
-- Leverages `NavigationStack` & `NavigationDestination`.
+- Leverages 1st-party APIs `NavigationStack` & `NavigationDestination`.
+- Never be confused about `NavigationLink` or `NavigationPath` again! (You don't need them)
 - Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
 
