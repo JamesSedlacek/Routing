@@ -80,7 +80,7 @@ enum ExampleRoute: Routable {
 }
 ```
 
-2. Wrap your `RootView` with a `RoutingView`. 
+2. Wrap your `RootView` with a `RoutingView`.
 
 ``` swift
 import SwiftUI
@@ -88,7 +88,7 @@ import Routing
 
 struct ContentView: View {
     var body: some View {
-        RoutingView(Route.self) { router in
+        RoutingView(ExampleRoute.self) { router in
             Button("Go to Settings") {
                 router.navigate(to: .settings)
             }
