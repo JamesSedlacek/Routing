@@ -7,10 +7,11 @@
 import SwiftUI
 
 public struct RoutingView<RootView: View, Routes: Routable>: View {
-    @StateObject private var router: Router<Routes> = .init()
+    @ObservedObject private var router: Router<Routes>
     private let rootView: (Router<Routes>) -> RootView
-
-    public init(_ routeType: Routes.Type, @ViewBuilder rootView: @escaping (Router<Routes>) -> RootView) {
+    
+    public init(_ router: Router<Routes>, @ViewBuilder rootView: @escaping (Router<Routes>) -> RootView) {
+        self.router = router
         self.rootView = rootView
     }
 
