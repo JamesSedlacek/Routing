@@ -63,7 +63,7 @@ https://github.com/JamesSedlacek/Routing.git
 </p>
 <br>
 
-4. Xcode will fetch the repository & the `Routing` library will be added to your project.
+3. Xcode will fetch the repository & the `Routing` library will be added to your project.
 
 <br>
 
