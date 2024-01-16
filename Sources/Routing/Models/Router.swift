@@ -10,4 +10,6 @@ public final class Router<Routes: Routable>: RoutableObject {
     public typealias Destination = Routes
 
     @Published public var stack: [Routes] = []
+    
+    public init() {}
 }
