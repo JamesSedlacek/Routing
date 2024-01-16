@@ -90,15 +90,17 @@ enum ExampleRoute: Routable {
 }
 ```
 
-2. Wrap your `RootView` with a `RoutingView`.
+2. Create a `Router` object and wrap your `RootView` with a `RoutingView`.
 
 ``` swift
 import SwiftUI
 import Routing
 
 struct ContentView: View {
+    @StateObject private var router: Router<ExampleRoute> = .init()
+
     var body: some View {
-        RoutingView(ExampleRoute.self) { router in
+        RoutingView(router) {
             Button("Go to Settings") {
                 router.navigate(to: .settings)
             }
@@ -169,10 +171,11 @@ enum ContentRoute: Routable {
 }
 
 struct ContentView: View {
+    @StateObject private var router: Router<ContentRoute> = .init()
     private let colors: [Color] = [.red, .green, .blue]
 
     var body: some View {
-        RoutingView(ContentRoute.self) { router in
+        RoutingView(router) {
             List(colors, id: \.self) { color in
                 color
                     .onTapGesture {
