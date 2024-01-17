@@ -226,6 +226,18 @@ struct SettingsView: View {
 
 <br>
 
+## Example
+
+### Routing with TabView
+
+The folder `Example Tabbar` adds a Demo project to this package where you can discover the `Routing` package in action.
+
+The project uses the TabView from SwiftUI and adds two new functionalities to it:
+- Navigating to the root view by tapping on the tab item
+- Scroll to the top when pressing again.
+
+<br>
+
 ## Under the hood
 
 The `RoutingView` essentially is just wrapping your view with a `NavigationStack` & `navigationDestination`.
