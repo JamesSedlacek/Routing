@@ -101,10 +101,10 @@ import SwiftUI
 import Routing
 
 struct ContentView: View {
-    @StateObject private var router: Router<ExampleRoute> = .init()
+    @State private var router: Router<ExampleRoute> = .init()
 
     var body: some View {
-        RoutingView(router) {
+        RoutingView(stack: $router.stack) {
             Button("Go to Settings") {
                 router.navigate(to: .settings)
             }
