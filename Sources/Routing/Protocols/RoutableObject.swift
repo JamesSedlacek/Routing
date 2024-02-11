@@ -6,35 +6,51 @@
 
 import SwiftUI
 
-/// RoutableObject protocol defines the basic navigation operations for a routable object.
-public protocol RoutableObject: ObservableObject {
+/// `RoutableObject` defines a protocol for objects that manage navigation within a SwiftUI application.
+/// It specifies a set of navigation operations that enable type-safe routing between views identified by destinations conforming to the `Routable` protocol.
+/// Implementers of this protocol can control navigation stacks, allowing for forward and backward navigation, programmatically navigating to specific destinations, and modifying the navigation stack as needed.
+///
+/// Types implementing `RoutableObject` can serve as the backbone of a navigation system, providing a consistent interface for navigating through an app's screens or views.
+public protocol RoutableObject: AnyObject {
+    /// The type of the destination views in the navigation stack. Must conform to `Routable`.
     associatedtype Destination: Routable
 
-    /// The navigation stack, represented as an array of destinations.
+    /// An array representing the current navigation stack of destinations.
+    /// Modifying this stack updates the navigation state of the application.
     var stack: [Destination] { get set }
 
-    /// Navigate back in the stack by a specified count.
+    /// Navigate back in the navigation stack by a specified number of destinations.
+    ///
+    /// - Parameter count: The number of destinations to navigate back by.
+    /// If the count exceeds the number of destinations in the stack, the stack is emptied.
     func navigateBack(_ count: Int)
-    
-    /// Navigate back to a specific destination in the stack.
+
+    /// Navigate back to a specific destination in the stack, removing all destinations that come after it.
+    ///
+    /// - Parameter destination: The destination to navigate back to.
+    /// If the destination does not exist in the stack, no action is taken.
     func navigateBack(to destination: Destination)
-    
-    /// Navigate to the root of the stack by emptying it.
+
+    /// Resets the navigation stack to its initial state, effectively navigating to the root destination.
     func navigateToRoot()
-    
-    /// Navigate to a specific destination by appending it to the stack.
+
+    /// Appends a new destination to the navigation stack, moving forward in the navigation flow.
+    ///
+    /// - Parameter destination: The destination to navigate to.
     func navigate(to destination: Destination)
-    
-    /// Navigate to multiple destinations by appending them to the stack.
+
+    /// Appends multiple new destinations to the navigation stack.
+    ///
+    /// - Parameter destinations: An array of destinations to append to the navigation stack.
     func navigate(to destinations: [Destination])
-    
-    /// Replace the current stack with new destinations.
+
+    /// Replaces the current navigation stack with a new set of destinations.
+    ///
+    /// - Parameter destinations: An array of new destinations to set as the navigation stack.
     func replace(with destinations: [Destination])
 }
 
 extension RoutableObject {
-    /// Navigate back in the stack by a specified count
-    /// If the count is greater than the stack count, the stack is emptied
     public func navigateBack(_ count: Int = 1) {
         guard count > 0 else { return }
         guard count <= stack.count else {
@@ -44,8 +60,6 @@ extension RoutableObject {
         stack.removeLast(count)
     }
 
-    /// Navigate back to a specific destination in the stack
-    /// If the destination exists in the stack, all destinations above it are removed
     public func navigateBack(to destination: Destination) {
         // Check if the destination exists in the stack
         if let index = stack.lastIndex(where: { $0 == destination }) {
@@ -54,25 +68,20 @@ extension RoutableObject {
         }
     }
 
-    /// Navigate to the root of the stack by emptying it
     public func navigateToRoot() {
         stack = []
     }
 
-    /// Navigate to a specific destination by appending it to the stack
     public func navigate(to destination: Destination) {
         stack.append(destination)
     }
 
-    /// Navigate to multiple destinations by appending them to the stack
     public func navigate(to destinations: [Destination]) {
-        for destination in destinations {
-            stack.append(destination)
-        }
+        stack += destinations
     }
 
-    /// Replace the current stack with a new set of destinations
     public func replace(with destinations: [Destination]) {
         stack = destinations
     }
 }
+

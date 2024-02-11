@@ -1,5 +1,5 @@
 //
-//  Array+Extensions.swift
+//  Array+Truncate.swift
 //
 //  Created by James Sedlacek on 12/29/23.
 //
@@ -21,7 +21,7 @@ extension Array {
     /// // numbers is now [1, 2, 3]
     /// ```
     mutating func truncate(to index: Int) {
-        guard index < self.count else {
+        guard index < self.count && index >= 0 else {
             return
         }
         self = Array(self[..<Swift.min(index + 1, self.count)])

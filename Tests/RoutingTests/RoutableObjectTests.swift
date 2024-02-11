@@ -8,6 +8,7 @@ import XCTest
 import SwiftUI
 @testable import Routing
 
+@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
 final class RoutableObjectTests: XCTestCase {
     private var router: Router<MockRoute>!
 
@@ -106,31 +107,5 @@ final class RoutableObjectTests: XCTestCase {
         router.replace(with: [.settings, .profile, .settings])
         XCTAssertEqual(router.stack.count, 3)
         XCTAssertEqual(router.stack, [.settings, .profile, .settings])
-    }
-}
-
-fileprivate enum MockRoute: Routable {
-    case settings
-    case profile
-
-    var body: some View {
-        switch self {
-        case .settings:
-            MockSettingsView()
-        case .profile:
-            MockProfileView()
-        }
-    }
-}
-
-fileprivate struct MockSettingsView: View {
-    var body: some View {
-        Text("Mock Settings View")
-    }
-}
-
-fileprivate struct MockProfileView: View {
-    var body: some View {
-        Text("Mock Profile View")
     }
 }

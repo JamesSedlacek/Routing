@@ -14,6 +14,9 @@
 `Routing` is a **lightweight** SwiftUI navigation library.
 - Leverages 1st-party APIs `NavigationStack` & `NavigationDestination`.
 - Never be confused about `NavigationLink` or `NavigationPath` again! (You don't need them)
+- Type-Safe Navigation (better performance than type-erasing).
+- Centralized Navigation Logic.
+- Dynamic Navigation Stack Management.
 - Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
 
@@ -131,23 +134,6 @@ func navigate(to destinations: [Destination])
 func replace(with destinations: [Destination])
 ```
 
-4. Child Views have access to the `Router` object through the environment.
-``` swift
-import SwiftUI
-import Routing
-
-struct SettingsView: View {
-    @EnvironmentObject
-    private var router: Router<ExampleRoute>
-    
-    var body: some View {
-        Button("Go Back") {
-            router.navigateBack()
-        }
-    }
-}
-```
-
 <br>
 
 ## Passing Data Example
@@ -171,11 +157,11 @@ enum ContentRoute: Routable {
 }
 
 struct ContentView: View {
-    @StateObject private var router: Router<ContentRoute> = .init()
+    @State private var router: Router<ContentRoute> = .init()
     private let colors: [Color] = [.red, .green, .blue]
 
     var body: some View {
-        RoutingView(router) {
+        RoutingView(stack: $router.stack) {
             List(colors, id: \.self) { color in
                 color
                     .onTapGesture {
@@ -187,8 +173,6 @@ struct ContentView: View {
 }
 
 struct ColorDetail: View {
-    @EnvironmentObject
-    private var router: Router<ContentRoute>
     private let color: Color
 
     init(color: Color) {
@@ -196,30 +180,7 @@ struct ColorDetail: View {
     }
 
     var body: some View {
-        color
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .toolbar { toolbarContentView }
-    }
-
-    private var toolbarContentView: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                router.navigate(to: .settings)
-            } label: {
-                Image(systemName: "gearshape")
-            }
-        }
-    }
-}
-
-struct SettingsView: View {
-    @EnvironmentObject
-    private var router: Router<ContentRoute>
-
-    var body: some View {
-        Button("Go back to Root") {
-            router.navigateToRoot()
-        }
+        color.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 ```
@@ -230,10 +191,10 @@ struct SettingsView: View {
 
 The `RoutingView` essentially is just wrapping your view with a `NavigationStack` & `navigationDestination`.
 ``` swift
-NavigationStack(path: $router.stack) {
-    rootView(router)
-        .navigationDestination(for: Router<Routes>.Destination.self) { route in
-            route.body.environmentObject(router)
+NavigationStack(path: $routes) {
+    root()
+        .navigationDestination(for: Routes.self) { view in
+            view.body
         }
 }
 ```
