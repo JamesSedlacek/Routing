@@ -19,6 +19,7 @@
 - Dynamic Navigation Stack Management.
 - Unit Tested protocol implementations.
 - Zero 3rd party dependencies.
+- [Documentation](https://jamessedlacek.github.io/documentation/routing)
 
 Note - This library is for **NavigationStack** only. <br>
 If you need to abstract sheets, alerts, etc. then use my other library [`Presenting`](https://github.com/JamesSedlacek/Presenting)
