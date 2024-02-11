@@ -8,12 +8,11 @@ import SwiftUI
 
 /// `Routable` is a typealias that combines multiple protocols to define requirements for views that can be used within a routing system.
 ///
-/// By conforming to `View`, `Hashable`, and `Equatable`, types that adopt `Routable` can be rendered within SwiftUI, uniquely identified, and compared for equality.
+/// By conforming to `View` and `Hashable`, types that adopt `Routable` can be rendered within SwiftUI, uniquely identified, and compared for equality.
 /// This is crucial for efficiently managing a navigation stack or routing mechanism in a SwiftUI application, enabling type-safe navigation between different views.
 ///
 /// - `View`: Ensures the conforming type can be rendered in the user interface as a SwiftUI view.
 /// - `Hashable`: Facilitates the unique identification of routes, which is key for handling collections of views or routes.
-/// - `Equatable`: Allows instances to be compared for equality, aiding in the optimization of navigation and view updates.
 ///
 /// The `Routable` typealias is intended for use in navigation and routing systems, offering a flexible and type-safe method for defining and navigating between different views in a SwiftUI application.
 ///
@@ -37,4 +36,4 @@ import SwiftUI
 ///     }
 /// }
 /// ```
-public typealias Routable = View & Hashable & Equatable
+public typealias Routable = View & Hashable
