@@ -101,7 +101,7 @@ import SwiftUI
 import Routing
 
 struct ContentView: View {
-    @State private var router: Router<ExampleRoute> = .init()
+    @Bindable private var router: Router<ExampleRoute> = .init()
 
     var body: some View {
         RoutingView(stack: $router.stack) {
@@ -158,7 +158,7 @@ enum ContentRoute: Routable {
 }
 
 struct ContentView: View {
-    @State private var router: Router<ContentRoute> = .init()
+    @Bindable private var router: Router<ContentRoute> = .init()
     private let colors: [Color] = [.red, .green, .blue]
 
     var body: some View {
