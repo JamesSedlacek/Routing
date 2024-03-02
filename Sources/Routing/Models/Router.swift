@@ -41,18 +41,6 @@ import SwiftUI
 /// Conformance to `RoutableObject`:
 /// - `Router` adheres to the `RoutableObject` protocol, implementing essential navigation operations such as navigating backwards, navigating to specific destinations, and managing the navigation stack.
 /// These capabilities are crucial for realizing complex navigation structures in a declarative, SwiftUI-compatible manner.
-@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)
-@Observable
-public final class Router<Routes: Routable>: RoutableObject {
-    public typealias Destination = Routes
-
-    public var stack: [Routes] = []
-
-    public init() {}
-}
-
-// Use this if you need to support earlier OS versions
-/*
 public final class Router<Routes: Routable>: RoutableObject, ObservableObject {
     public typealias Destination = Routes
 
@@ -60,4 +48,3 @@ public final class Router<Routes: Routable>: RoutableObject, ObservableObject {
 
     public init() {}
 }
-*/

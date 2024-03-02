@@ -15,6 +15,9 @@ let package = Package(
             name: "Routing",
             targets: ["Routing"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-docc-plugin", branch: "main"),
+    ],
     targets: [
         .target(
             name: "Routing"),
