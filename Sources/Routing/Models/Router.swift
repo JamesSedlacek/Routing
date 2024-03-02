@@ -9,16 +9,15 @@ import SwiftUI
 /// `Router` is a final class that acts as the navigation manager within a SwiftUI application, leveraging the `RoutableObject` protocol to handle navigation through a stack of routable destinations.
 /// It is specifically designed to work in conjunction with `RoutingView` to facilitate dynamic and type-safe navigation between views defined by the `Routes` enum.
 ///
-/// Marked with `@Observable` to integrate with SwiftUI's data-driven architecture, `Router` ensures that any modifications to the navigation stack prompt automatic UI updates.
-/// This behavior is pivotal for creating responsive and state-aware navigation flows in SwiftUI applications.
-///
+/// Now conforming to `ObservableObject` and using the `@Published` property wrapper, `Router` ensures that any modifications to the navigation stack prompt automatic UI updates.
+/// This enhancement is pivotal for creating responsive and state-aware navigation flows in SwiftUI applications, aligning with SwiftUI's data-driven architecture.
 ///
 /// The class is generic over a `Routes` parameter, which must conform to the `Routable` protocol.
 /// This design guarantees that the navigation stack consists solely of valid, predefined routes, enhancing the robustness and maintainability of the navigation logic.
 ///
 /// Usage Example:
 /// ```
-/// @State private var router: Router<MyRoutes> = .init()
+/// @StateObject private var router: Router<MyRoutes> = .init()
 ///
 /// var body: some View {
 ///     RoutingView(stack: $router.stack) {
@@ -32,7 +31,7 @@ import SwiftUI
 ///
 /// Properties:
 /// - `stack`: A mutable array of `Routes` that signifies the current navigation stack.
-/// Observing this property within SwiftUI views triggers re-renders upon its modification, enabling dynamic and reactive navigation experiences.
+/// Observing this property within SwiftUI views triggers re-renders upon its modification, enabled by the `@Published` property wrapper for dynamic and reactive navigation experiences.
 ///
 /// Initialization:
 /// - `init()`: Instantiates a `Router` with an initially empty navigation stack.
