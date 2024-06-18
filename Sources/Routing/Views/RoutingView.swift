@@ -57,7 +57,7 @@ public struct RoutingView<Root: View, Routes: Routable>: View {
         NavigationStack(path: $routes) {
             root()
                 .navigationDestination(for: Routes.self) { view in
-                    view.body
+                    view
                 }
         }
     }
