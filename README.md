@@ -195,7 +195,7 @@ The `RoutingView` essentially is just wrapping your view with a `NavigationStack
 NavigationStack(path: $routes) {
     root()
         .navigationDestination(for: Routes.self) { view in
-            view.body
+            view
         }
 }
 ```
