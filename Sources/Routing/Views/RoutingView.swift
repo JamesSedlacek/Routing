@@ -1,64 +1,67 @@
 //
 //  RoutingView.swift
-//
-//  Created by James Sedlacek on 12/14/23.
+//  Routing
 //
 
 import SwiftUI
 
-/// `RoutingView` is a generic structure that provides a navigation mechanism for SwiftUI views. 
-/// It uses a navigation stack to manage routing between different views based on the provided `Routes` enum.
+/// A thin convenience wrapper around `NavigationStack` that
+/// drives navigation from an external `[RouteType]` array.
 ///
-/// This structure is generic over two types: `Root` and `Routes`. `Root` is the type of the initial view to be displayed, and `Routes`
-/// is an enumeration that conforms to the `Routable` protocol, defining possible navigation paths in the application.
+/// `RoutingView` lets you keep the navigation “path” outside
+/// of your view hierarchy (e.g. in `@AppStorage` via `@Router`)
+/// while still enjoying type-safe `NavigationStack` behaviour.
+/// The view creates its own `NavigationStack` under-the-hood
+/// and forwards a binding to the caller-supplied `path`.
 ///
-/// - Parameters:
-///   - stack: A binding to an array of `Routes` that represents the current navigation stack. Changes to this array will update the navigation state.
-///   - root: A closure that returns the root view (`Root`) of the navigation stack. This view is presented initially when the `RoutingView` is rendered.
+/// Usage:
+/// ```swift
+/// enum MyRoute: Routable {                // 1️⃣ Conform to Routable
+///     case profile(Int)                   //    Your route cases
 ///
-/// The `RoutingView` uses a `NavigationStack` to manage its navigation stack, with the path being driven by the `routes` binding.
-/// It leverages SwiftUI's `navigationDestination(for:destination:)` modifier to map each route to its corresponding view.
+///     var body: some View {               //    Each case returns a view
+///         switch self {
+///         case .profile(let id):
+///             ProfileView(id: id)
+///         }
+///     }
+/// }
 ///
-/// Example Usage:
-/// ```
-/// struct ContentView: View {
-///     @State private var router: Router<MyRoutes> = .init()
+/// struct RootView: View {
+///     @Router private var path: [MyRoute] = []   // 2️⃣ Persist the path
 ///
 ///     var body: some View {
-///         RoutingView(stack: $router.stack) {
-///             MyRootView()
+///         RoutingView(path: $path) {             // 3️⃣ Wrap your root UI
+///             VStack {
+///                 Button("Show profile") {
+///                     path.navigate(to: .profile(42))
+///                 }
+///             }
 ///         }
 ///     }
 /// }
 /// ```
 ///
-/// - Note: Ensure that the `Routes` enum conforms to the `Routable` protocol and that each route properly defines its associated view.
-public struct RoutingView<Root: View, Routes: Routable>: View {
-    @Binding private var routes: [Routes]
-    private let root: () -> Root
+/// - Parameters:
+///   - RouteType: The enum/struct you use to describe destinations.
+///                Must conform to `Routable`.
+///   - RootContent: The root view shown at the bottom of the stack.
+public struct RoutingView<RouteType: Routable, RootContent: View>: View {
+    @Binding private var path: [RouteType]
+    private let rootContent: () -> RootContent
 
-    /// Initializes a new instance of `RoutingView` with the specified navigation stack and root view.
-    ///
-    /// - Parameters:
-    ///   - stack: A binding to an array of `Routes` indicating the current navigation stack.
-    ///   - root: A closure that returns the root view of the navigation stack.
     public init(
-        stack: Binding<[Routes]>,
-        @ViewBuilder root: @escaping () -> Root
-    ) where Routes: Routable {
-        self._routes = stack
-        self.root = root
+        path: Binding<[RouteType]>,
+        @ViewBuilder rootContent: @escaping () -> RootContent
+    ) {
+        self._path = path
+        self.rootContent = rootContent
     }
 
-    /// The body of the `RoutingView`. This view contains the navigation logic and view mapping based on the current state of the `routes` array.
-    ///
-    /// It uses a `NavigationStack` to present the root view and navigates to other views based on the `Routes` enum.
     public var body: some View {
-        NavigationStack(path: $routes) {
-            root()
-                .navigationDestination(for: Routes.self) { view in
-                    view.body
-                }
+        NavigationStack(path: $path) {
+            rootContent()
+                .navigationDestination(for: RouteType.self)
         }
     }
 }

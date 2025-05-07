@@ -1,7 +1,8 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+
 let package = Package(
     name: "Routing",
     platforms: [
@@ -13,16 +14,23 @@ let package = Package(
     products: [
         .library(
             name: "Routing",
-            targets: ["Routing"]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-docc-plugin", branch: "main"),
+            targets: ["Routing"]
+        ),
+        .executable(
+            name: "ExampleApp",
+            targets: ["ExampleApp"]
+        )
     ],
     targets: [
-        .target(
-            name: "Routing"),
+        .target(name: "Routing"),
+        .executableTarget(
+            name: "ExampleApp",
+            dependencies: ["Routing"],
+            path: "ExampleApp"
+        ),
         .testTarget(
             name: "RoutingTests",
-            dependencies: ["Routing"]),
+            dependencies: ["Routing"]
+        ),
     ]
 )
