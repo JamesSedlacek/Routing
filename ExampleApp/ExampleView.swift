@@ -6,6 +6,7 @@ public struct ExampleView: View {
     @State private var sheetRoute: SheetRoute? = nil
     private let title: String
 
+    @MainActor
     public init(title: String) {
         self.title = title
     }
@@ -70,6 +71,7 @@ public struct AnotherExampleView: View {
 public struct LastExampleView: View {
     @Router private var router: [TestRoute] = []
 
+    @MainActor
     public init() {}
 
     public var body: some View {
