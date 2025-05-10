@@ -21,6 +21,7 @@ public struct ExampleView: View {
         .sheet(item: $sheetRoute)
     }
 
+    @MainActor
     private func pushScreenAction() {
         router.navigate(to: .lastExample)
     }
