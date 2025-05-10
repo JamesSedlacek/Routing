@@ -6,6 +6,7 @@ public struct ExampleView: View {
     @State private var sheetRoute: SheetRoute? = nil
     private let title: String
 
+    @MainActor
     public init(title: String) {
         self.title = title
     }
@@ -21,6 +22,7 @@ public struct ExampleView: View {
         .sheet(item: $sheetRoute)
     }
 
+    @MainActor
     private func pushScreenAction() {
         router.navigate(to: .lastExample)
     }
@@ -39,7 +41,7 @@ public struct SheetExampleView: View {
     }
 
     public var body: some View {
-        if #available(iOS 17.0, *) {
+        if #available(iOS 17.0, macOS 14.0, *) {
             VStack(spacing: 40) {
                 Button("Push Screen", action: pushScreenAction)
                 
@@ -69,12 +71,14 @@ public struct AnotherExampleView: View {
 public struct LastExampleView: View {
     @Router private var router: [TestRoute] = []
 
+    @MainActor
     public init() {}
 
     public var body: some View {
         Button("Navigate to Root", action: navigateToRootAction)
     }
 
+    @MainActor
     private func navigateToRootAction() {
         router.navigateToRoot()
     }

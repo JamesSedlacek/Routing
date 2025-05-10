@@ -33,8 +33,8 @@ public enum SheetRoute: Routable {
     }
 }
 
-extension SheetRoute: @preconcurrency Identifiable {
-    public var id: Self { self }
+extension SheetRoute: Identifiable {
+    public nonisolated var id: Self { self }
 }
 
 public enum AnotherRoute: Routable {

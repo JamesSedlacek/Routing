@@ -22,6 +22,7 @@ public struct ContentView: View {
         }
     }
 
+    @MainActor
     private func pushScreenAction() {
         router.navigate(to: .example("Hello World!"))
     }
