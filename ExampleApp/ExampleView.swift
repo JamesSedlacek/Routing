@@ -75,6 +75,7 @@ public struct LastExampleView: View {
         Button("Navigate to Root", action: navigateToRootAction)
     }
 
+    @MainActor
     private func navigateToRootAction() {
         router.navigateToRoot()
     }
